@@ -1,0 +1,8 @@
+.wrapper {
+  display: flex;
+}
+
+.content {
+  margin-top: 60px;
+  text-align: center;
+}
