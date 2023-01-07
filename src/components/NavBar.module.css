@@ -1,11 +1,26 @@
 .container {
   position: fixed;
   display: flex;
-  bottom: 0;
-  height: 8.9rem;
-  width: 100%;
   align-items: center;
   justify-content: space-around;
+  height: 8.9rem;
+  width: 100%;
+  bottom: 0;
   background: #ffffff;
   box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.06);
+}
+
+.homeIcon {
+  margin-top: 11px;
+  margin-bottom: 44px;
+}
+
+.newPostIcon {
+  margin-top: 11px;
+  margin-bottom: 44px;
+}
+
+.listIcon {
+  margin-top: 11px;
+  margin-bottom: 44px;
 }
