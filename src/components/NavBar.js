@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "./Nav.module.css";
+import styles from "./NavBar.module.css";
 import setUserInfo from "../store/setUserInfo";
 
 function Nav() {

@@ -1,6 +1,6 @@
 import styles from "./App.module.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Nav from "./components/Nav";
+import NavBar from "./components/NavBar";
 import MainPage from "./pages/MainPage";
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
     <div className={styles.container}>
       <div className={styles.header}></div>
       <div className={styles.nav}>
-        <Nav />
+        <NavBar />
       </div>
       <div className={styles.content}>
         <Router>
