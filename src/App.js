@@ -2,11 +2,15 @@ import styles from "./App.module.css";
 import { Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import MainPage from "./pages/MainPage";
+import SearchBar from "./components/SearchBar";
 
 function App() {
   return (
     <div className={styles.container}>
       <div className={styles.header}></div>
+      <div className={styles.searchBar}>
+        <SearchBar />
+      </div>
       <div className={styles.nav}>
         <NavBar />
       </div>
