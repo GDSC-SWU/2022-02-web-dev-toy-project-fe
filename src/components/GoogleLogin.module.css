@@ -1,0 +1,54 @@
+
+/* ======================= reset ======================= */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    background: inherit; 
+    border:none; 
+    box-shadow:none; 
+    border-radius:0; 
+    padding:0; 
+    overflow:visible; 
+    cursor: pointer;
+}
+/* ======================================================= */
+
+.wrapper {
+    width: 375px;
+    text-align: left;
+}
+
+.btnContainer {
+    margin-top: 18rem;
+    padding: 1.5rem;
+}
+
+
+.subTitle {
+    font-size: 1rem;
+    margin: 7.875rem 0 0 3.5rem;
+}
+
+.title {
+    margin-left: 3.5rem;
+    font-weight: bold;
+}
+
+.title span {
+    color: #294BF5;
+    font-size: 40px;
+}
+
+.helpBtn {
+    width: 10.8rem;
+    border-radius: 32px;
+    margin: 0 auto;
+    margin-top: 2rem;
+    font-size: 10px;
+    color: #AFAFAF;
+    border: 1px solid #C9C9C9;
+    padding: 0.5rem 2rem;
+}
