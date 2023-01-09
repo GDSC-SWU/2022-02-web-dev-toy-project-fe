@@ -1,0 +1,6 @@
+.container {
+  position: fixed;
+  display: flex;
+  margin-top: 11.7rem;
+  left: 5%;
+}

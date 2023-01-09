@@ -1,0 +1,12 @@
+{
+  "data": [
+    {
+      "title": "이어폰",
+      "icon": "headphones.svg"
+    },
+    {
+      "title": "지갑",
+      "icon": "wallet.svg"
+    }
+  ]
+}
