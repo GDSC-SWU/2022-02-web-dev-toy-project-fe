@@ -1,0 +1,84 @@
+
+/* ======================= reset ======================= */
+* {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+button {
+    background: inherit; 
+    border:none; 
+    box-shadow:none; 
+    border-radius:0; 
+    padding:0; 
+    overflow:visible; 
+    cursor: pointer;
+}
+/* ======================================================= */
+
+.wrapper {
+    width: 375px;
+    margin-top: 6.875rem;
+    padding: 0 1.5rem;
+}
+
+.form_inputs {
+    position: relative;
+}
+
+.form_label {
+    font-size: 25px;
+}
+
+
+.input_subTitle {
+    font-size: 12px;
+    color: #a2a2a2;
+    margin-top: 1.5rem;
+}
+
+
+.nickname_input::placeholder {
+    font-size: 1.2rem;
+    color: #D0D5DB;
+    font-size: 18px;
+}
+
+.nickname_input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid rgb(0, 0, 0);
+    color: rgb(0, 0, 0);
+    box-sizing: border-box;
+    font-size: 18px;
+    height: 2rem;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding: 0.5rem;
+    top: 50%;
+    width: 20rem;
+}
+  
+nickname_input::-webkit-input-placeholder {
+    color: #AAA;
+  }
+  
+  nickname_input:focus::-webkit-input-placeholder {
+    color: rgb(0, 0, 0);
+  }
+  
+  .nickname_input:focus+.underline {
+    transform: scale(1);
+  }
+
+  .confirmBtn {
+    position: absolute;
+    bottom: 4.75rem;
+    width: 20.5rem;
+    height: 3.625rem;
+    background-color: #294BF5;
+    font-size: 18px;
+    color: #fff;
+    border-radius: 32px;
+    text-align: center;
+  }
