@@ -5,11 +5,11 @@ import { ReactComponent as ListIcon } from "../assets/images/home_icon_list.svg"
 import { ReactComponent as NewPostIcon } from "../assets/images/new_post_icon.svg";
 import { Link } from "react-router-dom";
 
-function Nav() {
+function NavBar() {
   return (
     <div className={styles.container}>
       <div className={styles.homeWrapper}>
-        <Link to="/">
+        <Link to="/home">
           <HomeIcon className={styles.homeIcon} />
         </Link>
       </div>
@@ -19,12 +19,10 @@ function Nav() {
         </Link>
       </div>
       <div className={styles.listWrapper}>
-        <Link to="/">
-          <ListIcon className={styles.listIcon} />
-        </Link>
+        <ListIcon className={styles.listIcon} />
       </div>
     </div>
   );
 }
 
-export default Nav;
+export default NavBar;

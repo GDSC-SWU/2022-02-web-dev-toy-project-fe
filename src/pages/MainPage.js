@@ -9,10 +9,6 @@ function MainPage() {
       x: 0,
       y: 0,
     },
-    controlledPos: {
-      x: -400,
-      y: 200,
-    },
   });
 
   const handleDrag = (e, ui) => {
@@ -27,14 +23,6 @@ function MainPage() {
         y: y + deltaY,
       },
     });
-  };
-
-  const mouseDownHandler = (e) => {
-    e.currentTarget.classList.add("mapWrapper--clicked");
-  };
-
-  const mouseUpHandler = (e) => {
-    e.currentTarget.classList.remove("mapWrapper--clicked");
   };
 
   return (
