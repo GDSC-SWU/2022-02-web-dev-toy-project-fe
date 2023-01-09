@@ -1,0 +1,6 @@
+img {
+  -webkit-user-drag: none;
+}
+.mapWrapper--clicked {
+  cursor: move;
+}
