@@ -1,8 +1,9 @@
 import styles from "./App.module.css";
 import { Routes, Route } from "react-router-dom";
-import NavBar from "./components/NavBar";
 import MainPage from "./pages/MainPage";
 import SearchBar from "./components/SearchBar";
+import CategoryBar from "./components/CategoryBar";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <div className={styles.header}></div>
       <div className={styles.searchBar}>
         <SearchBar />
+        <CategoryBar />
       </div>
       <div className={styles.nav}>
         <NavBar />
