@@ -3,12 +3,16 @@ import useForm from "./useForm";
 import validate from "./validateInfo";
 import styles from "./SignUpPage.module.css";
 import { Link } from "react-router-dom";
+import setUserInfo from "../store/setUserInfo";
+import { useDispatch } from "react-redux";
 
 const SignUp = ({ submitForm }) => {
   const { handleChange, values, handleSubmit, errors } = useForm(
     submitForm,
     validate
   );
+
+  const dispatch = useDispatch();
 
   return (
     <div className={styles.wrapper}>
@@ -30,7 +34,16 @@ const SignUp = ({ submitForm }) => {
           {errors.userNickname && <p>{errors.userNickname}</p>}
         </div>
         <Link to="/home">
-          <button className={styles.confirmBtn} type="submit">
+          <button
+            className={styles.confirmBtn}
+            type="submit"
+            // 테스트용
+            onClick={setUserInfo(
+              dispatch,
+              values.userNickname,
+              "token_sample_1234"
+            )}
+          >
             확인
           </button>
         </Link>
