@@ -1,5 +1,5 @@
 import styles from "./App.module.css";
-import GoogleLogin from "./components/GoogleLogin";
+import GoogleLogin from "./components/signUp/GoogleLogin";
 import { Routes, Route } from "react-router-dom";
 import SignUpPage from "./pages/SignUpPage";
 import HomePage from "./pages/HomePage";

@@ -1,5 +1,5 @@
 import styles from "./CategoryBar.module.css";
-import category_data from "../data/category.json";
+import category_data from "../../data/category.json";
 import CategoryButton from "./CategoryButton";
 
 function CategoryBar() {

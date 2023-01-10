@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./MainPage.module.css";
-import MainMap from "../components/MainMap.js";
+import MainMap from "../components/main/MainMap.js";
 import Draggable from "react-draggable";
 
 function MainPage() {

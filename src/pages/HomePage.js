@@ -1,8 +1,8 @@
 import styles from "./HomePage.module.css";
 import { Routes, Route } from "react-router-dom";
 import MainPage from "./MainPage";
-import SearchBar from "../components/SearchBar";
-import CategoryBar from "../components/CategoryBar";
+import SearchBar from "../components/main/SearchBar";
+import CategoryBar from "../components/main/CategoryBar";
 import NavBar from "../components/NavBar";
 
 function HomePage() {

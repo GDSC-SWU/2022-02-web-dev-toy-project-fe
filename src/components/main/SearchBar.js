@@ -1,9 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./SearchBar.module.css";
-import setUserInfo from "../store/setUserInfo";
-import { ReactComponent as SearchIcon } from "../assets/images/search_icon.svg";
-import { ReactComponent as Profile } from "../assets/images/profile_none.svg";
+import setUserInfo from "../../store/setUserInfo";
+import { ReactComponent as SearchIcon } from "../../assets/images/search_icon.svg";
+import { ReactComponent as Profile } from "../../assets/images/profile_none.svg";
 import { Link } from "react-router-dom";
 
 function SearchBar() {

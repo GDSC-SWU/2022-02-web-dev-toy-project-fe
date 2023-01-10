@@ -1,7 +1,7 @@
 import styles from "./MainMap.module.css";
 
 function MainMap() {
-  const MAP_PATH = require("../data/map_sample.png");
+  const MAP_PATH = require("../../data/map_sample.png");
 
   return (
     <div className={styles.container}>

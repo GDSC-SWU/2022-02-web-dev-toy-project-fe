@@ -1,7 +1,7 @@
 import styles from "./CategoryButton.module.css";
 
 function CategoryButton({ title, icon }) {
-  const ICON_PATH = require(`../assets/images/${icon}`);
+  const ICON_PATH = require(`../../assets/images/${icon}`);
 
   return (
     <div className={styles.container}>

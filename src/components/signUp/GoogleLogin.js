@@ -1,5 +1,5 @@
 import React from "react";
-import { postLogin } from "../api/postLogin";
+import { postLogin } from "../../api/postLogin";
 import { GoogleLogin } from "@react-oauth/google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import styles from "./GoogleLogin.module.css";
@@ -23,9 +23,9 @@ export default function GoogleLogIn() {
         </h1>
       </div>
 
-        <div className={styles.btnContainer}>
-                <Link to="/nickname">
-                  <GoogleLogin
+      <div className={styles.btnContainer}>
+        <Link to="/nickname">
+          <GoogleLogin
             onSuccess={(credentialResponse) => {
               // credential만 BE로 전송
               onGoogleLogIn(credentialResponse.credential);
@@ -34,10 +34,9 @@ export default function GoogleLogIn() {
               console.log("Login Failed");
             }}
           />
-          </Link>
-          <Modal />
-        </div>
-      
+        </Link>
+        <Modal />
+      </div>
     </GoogleOAuthProvider>
   );
 }
