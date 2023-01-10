@@ -22,9 +22,10 @@ export default function GoogleLogIn() {
           슈파인드 <span>.</span>
         </h1>
       </div>
-      <Link to="/nickname">
+
         <div className={styles.btnContainer}>
-          <GoogleLogin
+                <Link to="/nickname">
+                  <GoogleLogin
             onSuccess={(credentialResponse) => {
               // credential만 BE로 전송
               onGoogleLogIn(credentialResponse.credential);
@@ -33,9 +34,10 @@ export default function GoogleLogIn() {
               console.log("Login Failed");
             }}
           />
+          </Link>
           <Modal />
         </div>
-      </Link>
+      
     </GoogleOAuthProvider>
   );
 }
