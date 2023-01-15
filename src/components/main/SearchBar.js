@@ -4,9 +4,10 @@ import styles from "./SearchBar.module.css";
 import setUserInfo from "../../store/setUserInfo";
 import { ReactComponent as SearchIcon } from "../../assets/images/search_icon.svg";
 import { ReactComponent as Profile } from "../../assets/images/profile_none.svg";
+import { ReactComponent as TypeChangeIcon } from "../../assets/images/change_type_icon.svg";
 import { Link } from "react-router-dom";
 
-function SearchBar() {
+function SearchBar({ isFound }) {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
 
@@ -24,6 +25,16 @@ function SearchBar() {
 
   return (
     <div className={styles.container}>
+      <div
+        className={`${styles.searchTypeContainer} ${
+          isFound ? styles.searchFoundContainer : styles.searchLostContainer
+        }`}
+      >
+        <div className={styles.searchTypeIconWrapper}>
+          <TypeChangeIcon className={styles.searchTypeIcon} />
+        </div>
+        <div className={styles.searchType}>{isFound ? "습득" : "분실"}</div>
+      </div>
       <div className={styles.searchContainer}>
         <div className={styles.searchIconWrapper}>
           <SearchIcon className={styles.searchIcon} />
@@ -36,7 +47,7 @@ function SearchBar() {
           />
         </div>
       </div>
-      <div className={styles.profileWrapper}>
+      {/* <div className={styles.profileWrapper}>
         {state.userName !== null ? (
           // 구글 프로필로 연결
           <Link
@@ -56,7 +67,7 @@ function SearchBar() {
             <Profile className={styles.profile} />
           </Link>
         )}
-      </div>
+      </div> */}
     </div>
   );
 }
