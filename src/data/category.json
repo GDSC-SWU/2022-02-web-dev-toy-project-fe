@@ -1,12 +1,20 @@
 {
   "data": [
     {
-      "title": "이어폰",
-      "icon": "headphones.svg"
+      "title": "전자제품",
+      "icon": ["headphones.svg", "headphones_selected.svg"]
     },
     {
-      "title": "지갑",
-      "icon": "wallet.svg"
+      "title": "귀중품",
+      "icon": ["wallet.svg", "wallet_selected.svg"]
+    },
+    {
+      "title": "서적",
+      "icon": ["book.svg", "book_selected.svg"]
+    },
+    {
+      "title": "의류",
+      "icon": ["clothes.svg", "clothes_selected.svg"]
     }
   ]
 }
