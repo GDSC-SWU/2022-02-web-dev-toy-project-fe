@@ -1,38 +1,23 @@
 import { useState } from "react";
 import styles from "./MainPage.module.css";
 import MainMap from "../components/main/MainMap.js";
-import Draggable from "react-draggable";
+import SearchBar from "../components/main/SearchBar";
+import CategoryBar from "../components/main/CategoryBar";
 
 function MainPage() {
-  const [pos, setPos] = useState({
-    deltaPos: {
-      x: 0,
-      y: 0,
-    },
-  });
-
-  const handleDrag = (e, ui) => {
-    const { deltaPos } = pos;
-    const { x, y } = deltaPos;
-    const { deltaX, deltaY } = ui;
-
-    setPos({
-      ...pos,
-      deltaPos: {
-        x: x + deltaX,
-        y: y + deltaY,
-      },
-    });
-  };
+  // 현재 선택한 타입 (습득 / 분실)
+  const [isFound, setIsFound] = useState(true);
+  // 현재 선택한 카테고리 (전체 / 전자제품 ...)
+  const [currentCategory, setCurrentCatetory] = useState("전체");
 
   return (
     <div className={styles.wrapper}>
+      <div className={styles.searchBar}>
+        <SearchBar isFound={isFound} />
+        <CategoryBar currentCategory={currentCategory} />
+      </div>
       <div className={styles.content}>
-        <Draggable onDrag={handleDrag}>
-          <div className={styles.mapWrapper}>
-            <MainMap className={styles.map} />
-          </div>
-        </Draggable>
+        <div className={styles.mapWrapper}></div>
       </div>
     </div>
   );
