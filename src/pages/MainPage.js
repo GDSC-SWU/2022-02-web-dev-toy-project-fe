@@ -17,7 +17,9 @@ function MainPage() {
         <CategoryBar currentCategory={currentCategory} />
       </div>
       <div className={styles.content}>
-        <div className={styles.mapWrapper}></div>
+        <div className={styles.mapWrapper}>
+          <MainMap />
+        </div>
       </div>
     </div>
   );
