@@ -32,7 +32,7 @@ function SignUp() {
             {/* {errors.userNickname && <p>{errors.userNickname}</p>} */}
           </div>
           <Link
-            to={userWebMail ? "/home" : null}
+            to={userWebMail ? "/confirmWebMail" : null}
             className={
               userWebMail.length ? styles.confirmBtn : styles.confirmBtnDisable
             }
