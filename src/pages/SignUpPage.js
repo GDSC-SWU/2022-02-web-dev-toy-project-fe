@@ -1,55 +1,49 @@
 import React from "react";
-import useForm from "../hooks/useForm";
-import validate from "./validateInfo";
 import styles from "./SignUpPage.module.css";
 import { Link } from "react-router-dom";
-import setUserInfo from "../store/setUserInfo";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
 
-const SignUp = ({ submitForm }) => {
-  const { handleChange, values, handleSubmit, errors } = useForm(
-    submitForm,
-    validate
-  );
+function SignUp() {
+  const [userWebMail, setUserWebMail] = useState("");
 
-  const dispatch = useDispatch();
+  const handleUserWebMail = (e) => {
+    setUserWebMail(e.target.value);
+  };
+
+  // const createUser = async () => {
+  //   const { data } = await axios.post(`auth`);
+  // };
 
   return (
-    <div className={styles.wrapper}>
-      <form className="form" onSubmit={handleSubmit} noValidate>
-        <div className={styles.form_inputs}>
-          <label htmlFor="userNickname" className={styles.form_label}>
-            닉네임을 입력해주세요
-          </label>
-          <p className={styles.input_subTitle}>닉네임</p>
-          <input
-            id="userNickname"
-            type="text"
-            name="userNickname"
-            className={styles.nickname_input}
-            placeholder="ex) 슈파인더"
-            value={values.userNickname}
-            onChange={handleChange}
-          />
-          {errors.userNickname && <p>{errors.userNickname}</p>}
-        </div>
-        <Link to="/home">
-          <button
-            className={styles.confirmBtn}
-            type="submit"
-            // 테스트용
-            onClick={setUserInfo(
-              dispatch,
-              values.userNickname,
-              "token_sample_1234"
-            )}
+    <div className={styles.container}>
+      <div className={styles.wrapper}>
+        <form className="form">
+          <div className={styles.form_inputs}>
+            <label htmlFor="userWebmail" className={styles.form_label}>
+              학교 웹메일을 입력해주세요
+            </label>
+            <p className={styles.input_subTitle}>웹메일</p>
+            <input
+              className={styles.input_webmail}
+              placeholder="ex) swuniv@swu.ac.kr"
+              value={userWebMail}
+              onChange={handleUserWebMail}
+            />
+            {/* {errors.userNickname && <p>{errors.userNickname}</p>} */}
+          </div>
+          <Link
+            to={userWebMail ? "/home" : null}
+            className={
+              userWebMail.length ? styles.confirmBtn : styles.confirmBtnDisable
+            }
+            state={userWebMail}
           >
             확인
-          </button>
-        </Link>
-      </form>
+          </Link>
+        </form>
+      </div>
     </div>
   );
-};
+}
 
 export default SignUp;
