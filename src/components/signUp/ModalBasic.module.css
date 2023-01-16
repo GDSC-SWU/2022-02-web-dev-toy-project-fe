@@ -15,7 +15,7 @@
   /* translate는 본인의 크기 기준으로 작동한다. */
   position: absolute;
   left: 0;
-  top: -500px; /* 임시 사이즈 */
+  top: -550px; /* 임시 사이즈 */
 
   /* 모달창 디자인 */
   background-color: rgb(255, 255, 255);

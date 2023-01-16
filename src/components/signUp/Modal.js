@@ -6,13 +6,18 @@ import styled from "styled-components";
 function Modal() {
   // 모달창 노출 여부 state
   const [modalOpen, setModalOpen] = useState(false);
-
   // 모달창 노출
   const showModal = () => {
     setModalOpen(true);
   };
 
-  const ModalBg = styled.div`
+  const Wrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `;
+
+  const ModalOverlay = styled.div`
     color: #afafaf;
     width: 10.8rem;
     border-radius: 32px;
@@ -26,9 +31,11 @@ function Modal() {
 
   return (
     <div>
-      <button onClick={showModal}>
-        <ModalBg>로그인에 어려움이 있나요?</ModalBg>
-      </button>
+      <Wrapper>
+        <button onClick={showModal}>
+          <ModalOverlay>로그인에 어려움이 있나요?</ModalOverlay>
+        </button>
+      </Wrapper>
       {modalOpen && <ModalBasic setModalOpen={setModalOpen} />}
     </div>
   );
