@@ -9,6 +9,8 @@
   width: 375px;
   text-align: left;
   height: 100vh;
+  padding: 1.5rem;
+  box-sizing: border-box;
 }
 
 .welcomeTitle {
@@ -22,10 +24,6 @@
   font-weight: 700;
   font-size: 25px;
   margin-left: 1.5rem;
-}
-
-.buttonWrapper {
-  padding: 1.5rem;
 }
 
 .confirmBtn {

@@ -24,6 +24,8 @@ button {
 .wrapper {
   width: 375px;
   height: 100vh;
+  padding: 1.5rem;
+  box-sizing: border-box;
 }
 
 .form_inputs {
@@ -102,4 +104,8 @@ nickname_input:focus::-webkit-input-placeholder {
   text-align: center;
   line-height: 3.625rem;
   text-decoration: none;
+}
+
+.buttonWrapper {
+  padding: 1.5rem;
 }

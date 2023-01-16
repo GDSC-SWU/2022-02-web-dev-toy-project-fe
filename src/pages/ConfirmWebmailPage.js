@@ -35,7 +35,7 @@ function SignUp() {
             {/* {errors.userNickname && <p>{errors.userNickname}</p>} */}
           </div>
           <Link
-            to={userAuthNumber ? "/home" : null}
+            to={userAuthNumber ? "/welcome" : null}
             className={
               userAuthNumber.length
                 ? styles.confirmBtn
