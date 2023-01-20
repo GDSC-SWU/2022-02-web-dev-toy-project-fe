@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.box {
+  width: 375px;
+  height: 100vh;
+  background-color: rgb(225, 97, 97);
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.confirmBtn {
+  position: absolute;
+  bottom: 18rem;
+  width: 20.5rem;
+  height: 3.625rem;
+  background-color: #294bf5;
+  font-size: 18px;
+  color: #fff;
+  border-radius: 32px;
+  text-align: center;
+  line-height: 3.625rem;
+  text-decoration: none;
+}
