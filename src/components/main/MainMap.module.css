@@ -1,3 +1,17 @@
-img {
-  -webkit-user-drag: none;
+.currentLocContainer {
+  position: absolute;
+  top: 81.5%;
+  left: 84%;
+  width: 46px;
+  height: 46px;
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 23px;
+}
+
+.currentLoc {
+  margin-top: 11px;
+  margin-right: 11px;
+  margin-bottom: 11px;
+  margin-left: 11px;
 }
