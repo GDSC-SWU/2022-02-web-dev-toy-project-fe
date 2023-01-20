@@ -15,11 +15,3 @@
   position: absolute;
   z-index: -10;
 }
-
-.mapWrapper--clicked {
-  cursor: move;
-}
-
-.map {
-  position: relative;
-}
