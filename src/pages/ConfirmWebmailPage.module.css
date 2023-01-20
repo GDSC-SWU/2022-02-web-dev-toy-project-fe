@@ -45,13 +45,13 @@ button {
   margin-top: 1.5rem;
 }
 
-.input_webmail::placeholder {
+.input_authNumber::placeholder {
   font-size: 1.2rem;
   color: #d0d5db;
   font-size: 18px;
 }
 
-.input_webmail {
+.input_authNumber {
   background-color: transparent;
   border: none;
   border-bottom: 2px solid rgb(0, 0, 0);
@@ -66,15 +66,15 @@ button {
   width: 20rem;
 }
 
-nickname_input::-webkit-input-placeholder {
+input_authNumber::-webkit-input-placeholder {
   color: #aaa;
 }
 
-nickname_input:focus::-webkit-input-placeholder {
+input_authNumber:focus::-webkit-input-placeholder {
   color: rgb(0, 0, 0);
 }
 
-.nickname_input:focus + .underline {
+.input_authNumber:focus + .underline {
   transform: scale(1);
 }
 
@@ -106,6 +106,7 @@ nickname_input:focus::-webkit-input-placeholder {
   text-decoration: none;
 }
 
-.buttonWrapper {
-  padding: 1.5rem;
+.alert {
+  font-size: 12px;
+  color: #a2a2a2;
 }

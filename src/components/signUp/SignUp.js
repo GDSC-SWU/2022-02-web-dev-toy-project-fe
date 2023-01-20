@@ -5,9 +5,9 @@ import FormSuccess from "../../pages/FormSuccess";
 const Form = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  function submitForm() {
-    setIsSubmitted(true);
-  }
+  const submitForm = () => {
+    setIsSubmitted((prev) => !prev);
+  };
 
   return (
     <>

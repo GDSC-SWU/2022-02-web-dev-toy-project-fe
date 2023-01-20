@@ -1,5 +1,10 @@
 @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
 
+:root {
+  --main-color: #215fff;
+  --sub-color: #353535;
+}
+
 .App {
   text-align: center;
 }
@@ -9,7 +14,3 @@
   font-size: 16px;
 }
 
-:root {
-  --main-color: #215fff;
-  --sub-color: #353535;
-}

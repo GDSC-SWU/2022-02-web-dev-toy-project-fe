@@ -1,54 +1,76 @@
-
 /* ======================= reset ======================= */
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+  letter-spacing: -0.04rem;
 }
 
 button {
-    background: inherit; 
-    border:none; 
-    box-shadow:none; 
-    border-radius:0; 
-    padding:0; 
-    overflow:visible; 
-    cursor: pointer;
+  background: inherit;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  overflow: visible;
+  cursor: pointer;
 }
 /* ======================================================= */
 
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 .wrapper {
-    width: 375px;
-    text-align: left;
+  width: 375px;
+  text-align: left;
 }
 
 .btnContainer {
-    margin-top: 18rem;
-    padding: 1.5rem;
+  margin-top: 18rem;
+  padding: 1.5rem;
 }
 
-
 .subTitle {
-    font-size: 1rem;
-    margin: 7.875rem 0 0 3.5rem;
+  font-size: 1rem;
+  margin: 7.875rem 0 0 3.5rem;
 }
 
 .title {
-    margin-left: 3.5rem;
-    font-weight: bold;
+  margin-left: 3.5rem;
+  font-weight: bold;
+  font-size: 1.75rem;
 }
 
 .title span {
-    color: #294BF5;
-    font-size: 40px;
+  color: #294bf5;
+  font-size: 40px;
 }
 
 .helpBtn {
-    width: 10.8rem;
-    border-radius: 32px;
-    margin: 0 auto;
-    margin-top: 2rem;
-    font-size: 10px;
-    color: #AFAFAF;
-    border: 1px solid #C9C9C9;
-    padding: 0.5rem 2rem;
+  width: 10.8rem;
+  border-radius: 32px;
+  margin: 0 auto;
+  margin-top: 2rem;
+  font-size: 10px;
+  color: #afafaf;
+  border: 1px solid #c9c9c9;
+  padding: 0.5rem 2rem;
+}
+
+.googleLoginButton {
+  width: 328px;
+  height: 58px;
+  background-color: #215fff;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 5rem;
+  font-size: 18px;
+}
+
+.googleIcon {
+  display: inline-block;
+  margin-right: 8px;
 }
