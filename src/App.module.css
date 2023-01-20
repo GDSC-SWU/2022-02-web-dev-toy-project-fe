@@ -6,5 +6,10 @@
 
 * {
   font-family: "Spoqa Han Sans Neo", "sans-serif";
-  font-size: 10px;
+  font-size: 16px;
+}
+
+:root {
+  --main-color: #215fff;
+  --sub-color: #353535;
 }
