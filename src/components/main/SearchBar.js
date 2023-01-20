@@ -1,31 +1,14 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import styles from "./SearchBar.module.css";
-import setUserInfo from "../../store/setUserInfo";
 import { ReactComponent as SearchIcon } from "../../assets/images/search_icon.svg";
-import { ReactComponent as Profile } from "../../assets/images/profile_none.svg";
 import { ReactComponent as TypeChangeIcon } from "../../assets/images/change_type_icon.svg";
-import { Link } from "react-router-dom";
 
-function SearchBar({ isFound }) {
-  const dispatch = useDispatch();
-  const state = useSelector((state) => state);
-
-  // 테스트용
-  const onSignInClick = () => {
-    console.log("SignInClick");
-    setUserInfo(dispatch, "anonymous", "1234");
-  };
-  const onSignOutClick = () => {
-    console.log("SignOutClick");
-    if (window.confirm("로그아웃 하시겠습니까?")) {
-      setUserInfo(dispatch);
-    }
-  };
-
+function SearchBar({ isFound, onClickType }) {
+  console.log(isFound);
   return (
     <div className={styles.container}>
       <div
+        onClick={onClickType}
         className={`${styles.searchTypeContainer} ${
           isFound ? styles.searchFoundContainer : styles.searchLostContainer
         }`}
@@ -47,27 +30,6 @@ function SearchBar({ isFound }) {
           />
         </div>
       </div>
-      {/* <div className={styles.profileWrapper}>
-        {state.userName !== null ? (
-          // 구글 프로필로 연결
-          <Link
-            to="#section"
-            onClick={onSignOutClick}
-            className={styles.signed}
-          >
-            <Profile className={styles.profile} />
-          </Link>
-        ) : (
-          // 회원가입 페이지로 연결
-          <Link
-            to="#section"
-            onClick={onSignInClick}
-            className={styles.unsigned}
-          >
-            <Profile className={styles.profile} />
-          </Link>
-        )}
-      </div> */}
     </div>
   );
 }
