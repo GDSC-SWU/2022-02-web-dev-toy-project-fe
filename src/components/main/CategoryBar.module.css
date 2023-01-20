@@ -1,4 +1,56 @@
 .container {
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 26px;
+  margin-right: 14px;
+  white-space: nowrap;
+}
+
+.content {
+  display: flex;
+  margin-top: 6px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  margin-left: 10px;
+}
+
+.selected {
+  background: #6f6f6f;
+}
+
+.selected span {
+  color: #ffffff;
+}
+
+.notSelected {
+  background: #ffffff;
+}
+
+.notSelected span {
+  color: #353535;
+}
+
+.iconWrapper {
+  margin-top: 2px;
+}
+
+.titleWrapper {
+  margin-left: 6px;
+}
+
+.titleAllWrapper {
+  margin-right: 9px;
+  margin-left: 9px;
+}
+
+.title {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: -0.04em;
+}
+
+.barContainer {
   position: fixed;
   display: flex;
   margin-top: 7.4375rem;
