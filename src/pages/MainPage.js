@@ -10,15 +10,24 @@ function MainPage() {
   // 현재 선택한 카테고리 (전체 / 전자제품 ...)
   const [currentCategory, setCurrentCatetory] = useState("전체");
 
+  const onClickType = () => {
+    console.log(`1: ${isFound}`);
+    setIsFound(!isFound);
+    console.log(`2: ${isFound}`);
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.searchBar}>
-        <SearchBar isFound={isFound} />
-        <CategoryBar currentCategory={currentCategory} />
+        <SearchBar isFound={isFound} onClickType={onClickType} />
+        <CategoryBar
+          currentCategory={currentCategory}
+          setCurrentCatetory={setCurrentCatetory}
+        />
       </div>
       <div className={styles.content}>
         <div className={styles.mapWrapper}>
-          <MainMap />
+          <MainMap isFound={isFound} currentCategory={currentCategory} />
         </div>
       </div>
     </div>
