@@ -20,6 +20,8 @@ function MainPage() {
     <div className={styles.wrapper}>
       <div className={styles.searchBar}>
         <SearchBar isFound={isFound} onClickType={onClickType} />
+      </div>
+      <div className={styles.categoryBar}>
         <CategoryBar
           currentCategory={currentCategory}
           setCurrentCatetory={setCurrentCatetory}

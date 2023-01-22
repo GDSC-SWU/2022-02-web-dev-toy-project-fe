@@ -1,5 +1,19 @@
+import { useRef, useState } from "react";
 import styles from "./CategoryBar.module.css";
 import category_data from "../../data/category.json";
+
+const throttle = (func, ms) => {
+  let throttled = false;
+  return (...args) => {
+    if (!throttled) {
+      throttled = true;
+      setTimeout(() => {
+        func(...args);
+        throttled = false;
+      }, ms);
+    }
+  };
+};
 
 const CategoryButton = ({ title, icon, isSelected }) => {
   let ICON_PATH;
@@ -29,6 +43,41 @@ const CategoryButton = ({ title, icon, isSelected }) => {
 };
 
 function CategoryBar({ currentCategory }) {
+  const categoryRef = useRef(null);
+  const [isDrag, setIsDrag] = useState(false);
+  const [startX, setStartX] = useState();
+
+  const onDragStart = (e) => {
+    e.preventDefault();
+    setIsDrag(true);
+    setStartX(e.pageX + categoryRef.current.scrollLeft);
+    console.log(startX);
+  };
+
+  const onDragEnd = () => {
+    setIsDrag(false);
+  };
+
+  const onDragMove = (e) => {
+    if (isDrag) {
+      const { scrollWidth, clientWidth, scrollLeft } = categoryRef.current;
+
+      //categoryRef.current.scrollLeft += startX - e.pageX;
+      categoryRef.current.scrollTo(startX - e.pageX, 0);
+      console.log(startX - e.pageX);
+      console.log(categoryRef.current.scrollLeft);
+
+      if (scrollLeft === 0) {
+        setStartX(e.pageX);
+      } else if (scrollWidth <= clientWidth + scrollLeft) {
+        setStartX(e.pageX + scrollLeft);
+      }
+    }
+  };
+
+  const delay = 100;
+  const onThrottleDragMove = throttle(onDragMove, delay);
+
   const render = () => {
     const result = [];
     result.push(
@@ -55,7 +104,18 @@ function CategoryBar({ currentCategory }) {
     return result;
   };
 
-  return <div className={styles.barContainer}>{render()}</div>;
+  return (
+    <div
+      className={styles.barContainer}
+      onMouseDown={onDragStart}
+      onMouseMove={isDrag ? onThrottleDragMove : null}
+      onMouseUp={onDragEnd}
+      onMouseLeave={onDragEnd}
+      ref={categoryRef}
+    >
+      {render()}
+    </div>
+  );
 }
 
 export default CategoryBar;

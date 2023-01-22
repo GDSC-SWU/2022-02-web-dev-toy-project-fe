@@ -35,11 +35,13 @@
 
 .titleWrapper {
   margin-left: 6px;
+  flex: none;
 }
 
 .titleAllWrapper {
   margin-right: 9px;
   margin-left: 9px;
+  flex: none;
 }
 
 .title {
@@ -51,8 +53,9 @@
 }
 
 .barContainer {
-  position: fixed;
+  position: relative;
   display: flex;
   margin-top: 7.4375rem;
   left: 5%;
+  overflow-x: hidden;
 }
