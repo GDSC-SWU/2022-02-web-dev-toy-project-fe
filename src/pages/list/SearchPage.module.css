@@ -1,0 +1,91 @@
+.searchBarContainer {
+  display: flex;
+  margin-top: 57px;
+  margin-left: 4%;
+}
+
+.searchBarWrapper {
+  display: flex;
+  height: 2.5rem;
+  background: #f7f7f7;
+  border-radius: 5px;
+  flex: 1 15rem;
+}
+
+.searchIconWrapper {
+  margin-top: 0.5625rem;
+  margin-right: 0.75rem;
+  margin-bottom: 0.5625rem;
+  margin-left: 1rem;
+}
+
+.searchInput {
+  border: none;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 19px;
+  letter-spacing: -0.04em;
+  color: #c6c6c6;
+  background-color: #f7f7f7;
+  margin-top: 0.6875rem;
+  margin-right: 0.75rem;
+  margin-bottom: 0.625rem;
+}
+
+.cancelWrapper {
+  margin-top: 11px;
+  margin-right: 4%;
+  margin-left: 8px;
+}
+
+.cancel {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: -0.04em;
+  color: #353535;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+}
+
+.searchHelpContainer {
+  margin: 9.0625rem auto;
+}
+
+.searchIconBigWrapper {
+  margin-bottom: 1.25rem;
+  margin-left: 3.5rem;
+}
+
+.searchHelpWrapper {
+  margin-bottom: 0.5rem;
+}
+
+.searchHelp {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 24px;
+  text-align: center;
+  letter-spacing: -0.04em;
+  color: #292c33;
+}
+
+.searchHelpSubWrapper {
+  margin-left: 3.0625rem;
+}
+
+.searchHelpSub {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 18px;
+  text-align: center;
+  letter-spacing: -0.07em;
+  color: #929292;
+}
