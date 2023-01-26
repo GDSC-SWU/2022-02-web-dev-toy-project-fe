@@ -1,6 +1,9 @@
 import { useRef, useState } from "react";
 import styles from "./CategoryBar.module.css";
-import category_data from "../../data/category.json";
+import { ReactComponent as Headphones } from "../../assets/images/category/headphones.svg";
+import { ReactComponent as Wallet } from "../../assets/images/category/wallet.svg";
+import { ReactComponent as Clothes } from "../../assets/images/category/clothes.svg";
+import { ReactComponent as Book } from "../../assets/images/category/book.svg";
 
 const throttle = (func, ms) => {
   let throttled = false;
@@ -15,26 +18,36 @@ const throttle = (func, ms) => {
   };
 };
 
-const CategoryButton = ({ title, icon, isSelected }) => {
-  let ICON_PATH;
-
-  if (icon) {
-    ICON_PATH = require(`../../assets/images/category/${icon}`);
-  }
+const CategoryButton = ({ title, isSelected, option, setCurrentCategory }) => {
+  const Enum_choice = {
+    전자제품: <Headphones stroke={isSelected ? "#ffffff" : "#353535"} />,
+    귀중품: <Wallet stroke={isSelected ? "#ffffff" : "#353535"} />,
+    의류: <Clothes stroke={isSelected ? "#ffffff" : "#353535"} />,
+    서적: <Book stroke={isSelected ? "#ffffff" : "#353535"} />,
+  };
 
   return (
     <div
       className={`${styles.container} ${
-        isSelected ? styles.selected : styles.notSelected
+        isSelected
+          ? option
+            ? styles.selectedBlue
+            : styles.selected
+          : styles.notSelected
       }`}
+      onClick={() => {
+        setCurrentCategory(title);
+      }}
     >
       <div className={styles.content}>
-        {icon && (
-          <div className={styles.iconWrapper}>
-            <img className={styles.icon} src={ICON_PATH} alt={title} />
-          </div>
+        {title !== "전체" && (
+          <div className={styles.iconWrapper}>{Enum_choice[title]}</div>
         )}
-        <div className={icon ? styles.titleWrapper : styles.titleAllWrapper}>
+        <div
+          className={
+            title !== "전체" ? styles.titleWrapper : styles.titleAllWrapper
+          }
+        >
           <span className={styles.title}>{title}</span>
         </div>
       </div>
@@ -42,40 +55,41 @@ const CategoryButton = ({ title, icon, isSelected }) => {
   );
 };
 
-function CategoryBar({ currentCategory }) {
+function CategoryBar({ currentCategory, setCurrentCategory, option }) {
   const categoryRef = useRef(null);
   const [isDrag, setIsDrag] = useState(false);
   const [startX, setStartX] = useState();
+  const categories = ["전자제품", "귀중품", "의류", "서적"];
 
+  // 카테고리 좌우 드래그
   const onDragStart = (e) => {
-    e.preventDefault();
     setIsDrag(true);
     setStartX(e.pageX + categoryRef.current.scrollLeft);
-    console.log(startX);
   };
 
   const onDragEnd = () => {
     setIsDrag(false);
+    if (categoryRef.current.scrollLeft === 0) {
+      categoryRef.current.style.left = "5%";
+    }
   };
 
   const onDragMove = (e) => {
     if (isDrag) {
       const { scrollWidth, clientWidth, scrollLeft } = categoryRef.current;
 
-      //categoryRef.current.scrollLeft += startX - e.pageX;
       categoryRef.current.scrollTo(startX - e.pageX, 0);
-      console.log(startX - e.pageX);
-      console.log(categoryRef.current.scrollLeft);
 
       if (scrollLeft === 0) {
         setStartX(e.pageX);
       } else if (scrollWidth <= clientWidth + scrollLeft) {
+        categoryRef.current.style.left = 0;
         setStartX(e.pageX + scrollLeft);
       }
     }
   };
 
-  const delay = 100;
+  const delay = 25;
   const onThrottleDragMove = throttle(onDragMove, delay);
 
   const render = () => {
@@ -84,17 +98,19 @@ function CategoryBar({ currentCategory }) {
       <CategoryButton
         key="all"
         title="전체"
-        icon={null}
         isSelected={currentCategory === "전체"}
+        option={option}
+        setCurrentCategory={setCurrentCategory}
       />
     );
-    category_data.data.map((e, idx) => {
+    categories.map((e, idx) => {
       result.push(
         <CategoryButton
           key={`${idx}`}
-          title={e.title}
-          icon={currentCategory === e.title ? e.icon[1] : e.icon[0]}
-          isSelected={currentCategory === e.title}
+          title={e}
+          isSelected={currentCategory === e}
+          option={option}
+          setCurrentCategory={setCurrentCategory}
         />
       );
 
