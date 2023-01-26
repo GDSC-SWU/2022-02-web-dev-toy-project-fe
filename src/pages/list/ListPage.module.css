@@ -1,0 +1,59 @@
+.container {
+  margin-bottom: 5.5625rem;
+}
+
+.tabBarContainer {
+  position: relative;
+  display: flex;
+  margin-top: 69px;
+  left: 7.7%;
+  width: 87.5%;
+}
+
+.tab {
+  display: flex;
+  list-style: none;
+  flex: none;
+}
+
+.tabLi {
+  cursor: pointer;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  letter-spacing: -0.04em;
+  color: #bcbcbc;
+  margin-right: 1.6875rem;
+}
+
+.activeTab {
+  font-weight: 500;
+  line-height: 23px;
+  color: #000000;
+}
+
+.searchWrapper {
+  margin-left: auto;
+}
+
+.border {
+  margin-top: 0.3125rem;
+  height: 2px;
+  background: #e8e8e8;
+  transform: matrix(1, 0, 0, -1, 0, 0);
+}
+
+.borderActive {
+  width: 100px;
+  height: 2px;
+  background: #000000;
+}
+
+.foundBorder {
+  margin-left: 5.09%;
+}
+
+.lostBorder {
+  margin-left: 35.4%;
+}
