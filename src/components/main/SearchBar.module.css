@@ -2,7 +2,7 @@
   position: fixed;
   display: flex;
   align-items: center;
-  width: 90%;
+  width: 90vw;
   top: 55px;
   left: 5%;
 }
