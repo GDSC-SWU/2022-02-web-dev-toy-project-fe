@@ -8,7 +8,7 @@ function MainPage() {
   // 현재 선택한 타입 (습득 / 분실)
   const [isFound, setIsFound] = useState(true);
   // 현재 선택한 카테고리 (전체 / 전자제품 ...)
-  const [currentCategory, setCurrentCatetory] = useState("전체");
+  const [currentCategory, setCurrentCategory] = useState("전체");
 
   const onClickType = () => {
     console.log(`1: ${isFound}`);
@@ -24,7 +24,8 @@ function MainPage() {
       <div className={styles.categoryBar}>
         <CategoryBar
           currentCategory={currentCategory}
-          setCurrentCatetory={setCurrentCatetory}
+          setCurrentCategory={setCurrentCategory}
+          option={false}
         />
       </div>
       <div className={styles.content}>
