@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import axios from "axios";
+import API from "../../api/API";
 import { useLocation } from "react-router-dom";
 import styles from "./MainMap.module.css";
 import { ReactComponent as CurrentLoc } from "../../assets/images/currentLoc_icon.svg";
@@ -28,21 +29,20 @@ const mapOptions = {
 let currentPath = "";
 
 function MainMap({ isFound, currentCategory }) {
-  /*
   // API
-  const [postList, setPostList] = useState();
-   useEffect(() => {
+  //const [postList, setPostList] = useState();
+  useEffect(() => {
     const getPosts = async () => {
       try {
-        const posts = await axios.get("/post");
-        setPostList(posts);
+        const posts = await API.get("/post");
+        console.log(posts);
       } catch (err) {
         console.log(err);
       }
     };
 
     getPosts();
-  }, []); */
+  }, []);
 
   const mapRef = useRef(null);
   const [center, setCenter] = useState({
