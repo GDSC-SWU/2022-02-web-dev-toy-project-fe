@@ -1,7 +1,6 @@
 import styles from "./SetLocation.module.css";
 import { Link } from "react-router-dom";
 import InputTextbox from "./InputTextBox";
-import Location from "./Location";
 
 function SetLocation() {
   return (
@@ -19,9 +18,7 @@ function SetLocation() {
           placeholderText="상세 주소를 입력해주세요."
         />
         <div></div>
-        <Link to={"/write"} className={styles.confirmBtn}>
-          다음
-        </Link>
+        <Link to={"/createpost"}>다음</Link>
       </div>
     </div>
   );
