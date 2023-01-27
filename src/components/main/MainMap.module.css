@@ -1,7 +1,7 @@
 .currentLocContainer {
-  position: absolute;
-  top: 81.5%;
-  left: 84%;
+  position: fixed;
+  top: calc(100vh - 46px - 89px - 15px);
+  right: 5%;
   width: 46px;
   height: 46px;
   background: #ffffff;

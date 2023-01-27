@@ -2,6 +2,7 @@
 
 :root {
   --main-color: #215fff;
+  --category-blue: #4981ff;
   --sub-color: #353535;
 }
 
@@ -13,4 +14,3 @@
   font-family: "Spoqa Han Sans Neo", "sans-serif";
   font-size: 16px;
 }
-

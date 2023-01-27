@@ -2,7 +2,9 @@ import styles from "./App.module.css";
 import GoogleLogin from "./components/signUp/GoogleLogin";
 import { Routes, Route } from "react-router-dom";
 import SignUpPage from "./pages/SignUpPage";
+import ConfirmWebmailPage from "./pages/ConfirmWebmailPage";
 import HomePage from "./pages/HomePage";
+import DetailPage from "./pages/DetailPage";
 
 function App() {
   return (
@@ -10,8 +12,10 @@ function App() {
       <div className={styles.wrapper}>
         <Routes>
           <Route path="/" element={<GoogleLogin />} />
-          <Route path="/nickname" element={<SignUpPage />} />
-          <Route path="/home" element={<HomePage />} />
+          <Route path="/email" element={<SignUpPage />} />
+          <Route path="/confirmWebMail" element={<ConfirmWebmailPage />} />
+          <Route path="/home/*" element={<HomePage />} />
+          <Route path="/detail/:postid" element={<DetailPage />} />
         </Routes>
       </div>
     </div>

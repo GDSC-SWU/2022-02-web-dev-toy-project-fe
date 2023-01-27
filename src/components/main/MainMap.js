@@ -1,13 +1,15 @@
 import React, { useEffect, useState, useRef } from "react";
-import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import axios from "axios";
+import API from "../../api/API";
+import { useLocation } from "react-router-dom";
 import styles from "./MainMap.module.css";
 import { ReactComponent as CurrentLoc } from "../../assets/images/currentLoc_icon.svg";
 import { ReactComponent as CurrentLocSelected } from "../../assets/images/currentLoc_icon_selected.svg";
-import { useLocation } from "react-router-dom";
-import sample_data from "../../data/items_sample_data.json";
+import Marker from "./Marker.js";
+import ItemCarousel from "./itemCarousel/ItemCarousel";
+import postList from "../../data/samples/sample_data.json";
 import swu_place_data_sample from "../../data/swu_place_data_sample.json";
-import blue from "../../assets/images/clusterer_images/blueCircle.svg";
-import black from "../../assets/images/clusterer_images/blackCircle.svg";
 
 // google map options
 const API_KEY = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
@@ -27,7 +29,31 @@ const mapOptions = {
 let currentPath = "";
 
 function MainMap({ isFound, currentCategory }) {
-  console.log(isFound);
+  // API
+  //const [postList, setPostList] = useState();
+  useEffect(() => {
+    const getPosts = async () => {
+      try {
+        const posts = await API.get("/post");
+        console.log(posts);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getPosts();
+  }, []);
+
+  const mapRef = useRef(null);
+  const [center, setCenter] = useState({
+    // (기본) 서울여자대학교 좌표
+    lat: 37.62814,
+    lng: 127.09046,
+  });
+  const [userLoc, setUserLoc] = useState(center);
+  const [isCurrent, setIsCurrent] = useState(false);
+  const { geolocation } = navigator;
+
   // 페이지에 접속한 상태에서 다시 홈 버튼 클릭했을 때도 새로고침 되도록
   const location = useLocation();
   useEffect(() => {
@@ -37,18 +63,6 @@ function MainMap({ isFound, currentCategory }) {
 
     currentPath = location.pathname;
   }, [location]);
-
-  const mapRef = useRef(null);
-  const clustererRef = useRef(null);
-  const markerRef = useRef(null);
-  const [center, setCenter] = useState({
-    // (기본) 서울여자대학교 좌표
-    lat: 37.62814,
-    lng: 127.09046,
-  });
-  const [userLoc, setUserLoc] = useState(center);
-  const [isCurrent, setIsCurrent] = useState(false);
-  const { geolocation } = navigator;
 
   // google map
   const { isLoaded } = useJsApiLoader({
@@ -108,139 +122,105 @@ function MainMap({ isFound, currentCategory }) {
     );
   };
 
-  // clusterer
-  // cluster 초기화
-  const cluster_data = [];
+  const place_data = [];
   swu_place_data_sample.data.map((item) => {
-    cluster_data.push({
+    place_data.push({
       place: item.place,
       loc: { lat: item.lat, lng: item.lng },
       count: 0,
       posts: [],
     });
 
-    return cluster_data;
+    return place_data;
   });
-  let temp = JSON.parse(JSON.stringify(cluster_data));
-  const [markers, setMarkers] = useState(temp);
+
+  const temp = JSON.parse(JSON.stringify(place_data));
+  const temp2 = JSON.parse(JSON.stringify(place_data));
+
+  const [foundMarkers, setFoundMarkers] = useState(temp);
+  const [lostMarkers, setLostMarkers] = useState(temp2);
 
   useEffect(() => {
-    // search type이나 현재 카테고리가 변경될 경우 클러스터러 Repaint
-    console.log(clustererRef?.current);
-    console.log(markerRef?.current);
-    if (map) {
-      // hide markers
-      markers.length = 0;
-      for (let i = 0; i < markers.length; i++) {
-        markers[i].setMap(null);
-        setMarkers(null);
-      }
-      // delete markers
-      addMarkers(map);
-    }
-    setMap(null);
     addMarkers();
-    clustererRef.current?.repaint();
   }, [isFound, currentCategory]);
 
   function addMarkers() {
-    const result = markers;
+    const foundResult = [...foundMarkers];
+    const lostResult = [...lostMarkers];
 
-    result.map((item) => {
-      const i = item;
-      i.count = 0;
-      i.posts = [];
-
-      return result;
-    });
-
-    setMarkers(result);
-
-    let flag; // 분류 위한 플래그
-    if (isFound && currentCategory === "전체") {
-      flag = 0;
-    } else if (isFound && currentCategory !== "전체") {
-      flag = 1;
-    } else if (!isFound && currentCategory === "전체") {
-      flag = 2;
-    } else if (!isFound && currentCategory !== "전체") {
-      flag = 3;
+    // Remove markers before adding
+    for (let i = 0; i < foundResult.length; i++) {
+      foundResult[i].count = 0;
+      foundResult[i].posts = [];
+      lostResult[i].count = 0;
+      lostResult[i].posts = [];
     }
 
-    switch (flag) {
-      case 0: // 습득, 카테고리 전체
-        // 게시물 장소에 따라 cluster state의 count 증가 + postId 배열에 추가
-        sample_data.data.map((item) => {
-          if (item.status === "found" && currentCategory === "전체") {
-            const i = result.find((e) => {
-              return e.place === item.place;
-            });
+    if (currentCategory === "전체") {
+      // 카테고리 미선택 시
+      postList.data.map((item) => {
+        if (item.postStatus === "found") {
+          const i = foundResult.findIndex((e) => {
+            return e.place === item.place;
+          });
 
-            if (i) {
-              i.count++;
-              i.posts = [...i.posts, item.postId];
-            }
+          if (i >= 0) {
+            foundResult[i].count++;
+            foundResult[i].posts = [...foundResult[i].posts, item.postId];
           }
+        } else if (item.postStatus === "lost") {
+          const i = lostResult.findIndex((e) => {
+            return e.place === item.place;
+          });
 
-          return result;
-        });
-        break;
-      case 1: // 습득, 카테고리 선택
-        sample_data.data.map((item) => {
-          if (item.status === "found" && item.tag === currentCategory) {
-            const i = result.find((e) => {
-              return e.place === item.place;
-            });
-
-            if (i) {
-              i.count++;
-              i.posts = [...i.posts, item.postId];
-            }
+          if (i >= 0) {
+            lostResult[i].count++;
+            lostResult[i].posts = [...lostResult[i].posts, item.postId];
           }
+        }
 
-          return result;
-        });
-        break;
-      case 2: // 분실, 카테고리 전체
-        sample_data.data.map((item) => {
-          if (item.status === "lost" && currentCategory === "전체") {
-            const i = result.find((e) => {
-              return e.place === item.place;
-            });
+        return foundResult;
+      });
+    } else {
+      // 카테고리 선택 시
+      postList.data.map((item) => {
+        if (item.postStatus === "found" && currentCategory === item.tag) {
+          const i = foundResult.findIndex((e) => {
+            return e.place === item.place;
+          });
 
-            if (i) {
-              i.count++;
-              i.posts = [...i.posts, item.postId];
-            }
+          if (i >= 0) {
+            foundResult[i].count++;
+            foundResult[i].posts = [...foundResult[i].posts, item.postId];
           }
+        } else if (item.postStatus === "lost" && currentCategory === item.tag) {
+          const i = lostResult.findIndex((e) => {
+            return e.place === item.place;
+          });
 
-          return result;
-        });
-        break;
-      case 3: // 분실, 카테고리 선택
-        sample_data.data.map((item) => {
-          if (item.status === "lost" && item.tag === currentCategory) {
-            const i = result.find((e) => {
-              return e.place === item.place;
-            });
-
-            if (i) {
-              i.count++;
-              i.posts = [...i.posts, item.postId];
-            }
+          if (i >= 0) {
+            lostResult[i].count++;
+            lostResult[i].posts = [...lostResult[i].posts, item.postId];
           }
+        }
 
-          return result;
-        });
-        break;
-      default:
-        break;
+        return foundResult;
+      });
     }
 
-    setMarkers(result);
-
-    console.log(markers);
+    setFoundMarkers(foundResult);
+    setLostMarkers(lostMarkers);
   }
+
+  const [selectedMarker, setSelectedMarker] = useState([]);
+  const [selectedPosts, setSelectedPosts] = useState([]);
+
+  const onHandleClick = (idx, posts) => {
+    const markerArr = Array(foundMarkers.length).fill(false);
+    markerArr[idx] = true;
+    setSelectedMarker(markerArr);
+    setSelectedPosts(posts);
+  };
 
   return (
     <div className={styles.container}>
@@ -255,22 +235,40 @@ function MainMap({ isFound, currentCategory }) {
             ref={mapRef}
             onDragStart={onMapDragHandle}
           >
-            {markers.map((marker, i) => (
-              <MarkerF
-                className={styles.marker}
-                onLoad={(marker) => {
-                  markerRef.current = marker;
-                }}
-                key={i}
-                position={{ lat: marker.loc.lat, lng: marker.loc.lng }}
-                noClustererRedraw={false}
-                icon={{
-                  url: `${isFound ? blue : black}`,
-                  height: 44,
-                  width: 44,
-                }}
-              />
-            ))}
+            <div className={styles.markers}>
+              {isFound
+                ? foundMarkers
+                    .filter((marker) => marker.count > 0)
+                    .map((marker, i) => (
+                      <Marker
+                        key={i}
+                        isFound={isFound}
+                        currentCategory={currentCategory}
+                        marker={marker}
+                        i={i}
+                        onHandleClick={onHandleClick}
+                        isSelected={selectedMarker[i]}
+                      />
+                    ))
+                : lostMarkers
+                    .filter((marker) => marker.count > 0)
+                    .map((marker, i) => (
+                      <Marker
+                        key={i}
+                        isFound={isFound}
+                        currentCategory={currentCategory}
+                        marker={marker}
+                        i={i}
+                        onHandleClick={onHandleClick}
+                        isSelected={selectedMarker[i]}
+                      />
+                    ))}
+            </div>
+            <div className={styles.itemCarousel}>
+              {selectedMarker.findIndex((item) => item === true) !== -1 && (
+                <ItemCarousel posts={selectedPosts} />
+              )}
+            </div>
           </GoogleMap>
         )}
       </div>

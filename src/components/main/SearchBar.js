@@ -4,7 +4,6 @@ import { ReactComponent as SearchIcon } from "../../assets/images/search_icon.sv
 import { ReactComponent as TypeChangeIcon } from "../../assets/images/change_type_icon.svg";
 
 function SearchBar({ isFound, onClickType }) {
-  console.log(isFound);
   return (
     <div className={styles.container}>
       <div
@@ -20,7 +19,12 @@ function SearchBar({ isFound, onClickType }) {
       </div>
       <div className={styles.searchContainer}>
         <div className={styles.searchIconWrapper}>
-          <SearchIcon className={styles.searchIcon} />
+          <SearchIcon
+            className={styles.searchIcon}
+            width={14}
+            height={14}
+            fill={"#ababab"}
+          />
         </div>
         <div className={styles.searchInputWrapper}>
           <input

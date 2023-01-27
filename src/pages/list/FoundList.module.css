@@ -1,0 +1,39 @@
+.container {
+  margin-top: 0.4375rem;
+}
+.contentContainer {
+  margin-right: 18px;
+  margin-left: 18px;
+}
+
+.optionContainer {
+  display: flex;
+  margin-top: 1.375rem;
+  margin-bottom: 0.9375rem;
+}
+
+.checkIcon {
+  margin-top: 0.1875rem;
+  cursor: pointer;
+}
+
+.optionWrapper {
+  margin-left: 0.3125rem;
+}
+
+.optionText {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 15px;
+  letter-spacing: -0.04em;
+  color: #353535;
+}
+
+.listItemConatainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 12px;
+}
