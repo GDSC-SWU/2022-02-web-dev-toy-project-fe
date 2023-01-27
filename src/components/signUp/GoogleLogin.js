@@ -1,5 +1,5 @@
 import React from "react";
-// import { postLogin } from "../../api/postLogin";
+import { postLogin } from "../../api/postLogin";
 import { FaGoogle } from "react-icons/fa";
 import { useGoogleLogin } from "@react-oauth/google";
 // import { useGoogleLogout } from "@react-oauth/google";
@@ -13,6 +13,7 @@ export default function GoogleLogIn() {
   const signIn = useGoogleLogin({
     onSuccess: (credentialResponse) => {
       console.log(credentialResponse);
+      postLogin(credentialResponse.access_token);
       navigation("/email");
     },
     onError: () => {
