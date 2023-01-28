@@ -1,0 +1,85 @@
+.container {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  width: 90vw;
+  top: 55px;
+  left: 5%;
+}
+
+.searchTypeContainer {
+  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  display: flex;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.searchFoundContainer {
+  background: var(--main-color);
+}
+
+.searchLostContainer {
+  background: var(--sub-color);
+}
+
+.searchTypeIcon {
+  margin-top: 15px;
+  margin-bottom: 13.5px;
+  margin-left: 17px;
+}
+
+.searchType {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.125rem;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  margin-top: 15px;
+  margin-right: 17px;
+  margin-bottom: 11px;
+  margin-left: 12px;
+}
+
+.searchContainer {
+  flex: 1 15rem;
+  display: flex;
+  justify-content: flex-start;
+  height: 2.9375rem;
+  background: #ffffff;
+  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 0.3125rem;
+}
+
+.searchIcon {
+  margin-top: 13px;
+  margin-bottom: 13px;
+  margin-left: 14px;
+}
+
+.searchInput {
+  margin-left: 15px;
+  margin-top: 15px;
+  margin-bottom: 13px;
+  border: none;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.0625rem;
+  letter-spacing: -0.04em;
+}
+
+input:focus {
+  outline: none;
+}
+
+input::placeholder {
+  color: #c6c6c6;
+}
+
+.profile {
+  margin-top: 8px;
+  margin-right: 7px;
+  margin-bottom: 6px;
+}

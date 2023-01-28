@@ -1,0 +1,16 @@
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+
+:root {
+  --main-color: #215fff;
+  --category-blue: #4981ff;
+  --sub-color: #353535;
+}
+
+.App {
+  text-align: center;
+}
+
+* {
+  font-family: "Spoqa Han Sans Neo", "sans-serif";
+  font-size: 16px;
+}

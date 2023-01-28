@@ -1,0 +1,39 @@
+.container {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 5.5625rem;
+  width: 100vw;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: #ffffff;
+  box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.06);
+  z-index: 100;
+}
+
+.homeWrapper {
+  margin-top: 11px;
+  margin-bottom: 44px;
+}
+
+.listWrapper {
+  margin-top: 11px;
+  margin-bottom: 44px;
+}
+
+.newPostWrapper {
+  margin-top: 11px;
+  margin-bottom: 44px;
+}
+
+.bellWrapper {
+  margin-top: 11px;
+  margin-bottom: 44px;
+}
+
+.mypageWrapper {
+  margin-top: 11px;
+  margin-bottom: 44px;
+}

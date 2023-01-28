@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box {
+  width: 375px;
+  height: 100vh;
+  background-color: rgb(188, 141, 141);
+}

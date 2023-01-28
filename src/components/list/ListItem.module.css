@@ -1,0 +1,97 @@
+.container {
+  width: 162px;
+  margin-bottom: 24px;
+}
+
+.imgContainer {
+  position: relative;
+  border-radius: 5px 5px 0px 0px;
+  width: 162px;
+  height: 147px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.foundCover {
+  position: absolute;
+  width: 162px;
+  height: 147px;
+}
+
+.shareButtonWrapper {
+  position: relative;
+  left: 132px;
+  top: 117px;
+}
+
+.infoContainer {
+  margin-left: 0.0625rem;
+}
+
+.titleWrapper {
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 17px;
+  letter-spacing: -0.04em;
+  color: #292c33;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.locContainer {
+  display: flex;
+}
+
+.locIcon {
+  margin-top: 0.1rem;
+  margin-right: 0.229375rem;
+}
+
+.loc {
+  font-weight: 400;
+  font-size: 0.625rem;
+  line-height: 12px;
+  letter-spacing: -0.07em;
+  color: #929292;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tagWrapper {
+  display: inline-flex;
+  background: #e5ecfe;
+  border-radius: 13px;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0.1875rem 0.5rem;
+  gap: 0.25rem;
+  margin-top: 0.625rem;
+}
+
+.iconWrapper {
+  margin-top: 0.0625rem;
+}
+
+.tagNameWrapper {
+  margin-top: 0.25rem;
+}
+
+.tagName {
+  font-weight: 500;
+  font-size: 0.625rem;
+  line-height: 13px;
+  align-items: center;
+  text-align: center;
+  letter-spacing: -0.035em;
+  color: #0f50fb;
+}

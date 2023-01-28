@@ -1,0 +1,112 @@
+/* ======================= reset ======================= */
+* {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+button {
+  background: inherit;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  overflow: visible;
+  cursor: pointer;
+}
+/* ======================================================= */
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper {
+  width: 375px;
+  height: 100vh;
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+.form_inputs {
+  position: relative;
+}
+
+.form_label {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 6.9rem;
+}
+
+.input_subTitle {
+  font-size: 12px;
+  color: #a2a2a2;
+  margin-top: 1.5rem;
+}
+
+.input_authNumber::placeholder {
+  font-size: 1.2rem;
+  color: #d0d5db;
+  font-size: 18px;
+}
+
+.input_authNumber {
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid rgb(0, 0, 0);
+  color: rgb(0, 0, 0);
+  box-sizing: border-box;
+  font-size: 18px;
+  height: 2rem;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding: 0.5rem;
+  top: 50%;
+  width: 20rem;
+}
+
+input_authNumber::-webkit-input-placeholder {
+  color: #aaa;
+}
+
+input_authNumber:focus::-webkit-input-placeholder {
+  color: rgb(0, 0, 0);
+}
+
+.input_authNumber:focus + .underline {
+  transform: scale(1);
+}
+
+.confirmBtn {
+  position: absolute;
+  bottom: 18rem;
+  width: 20.5rem;
+  height: 3.625rem;
+  background-color: #294bf5;
+  font-size: 18px;
+  color: #fff;
+  border-radius: 32px;
+  text-align: center;
+  line-height: 3.625rem;
+  text-decoration: none;
+}
+
+.confirmBtnDisable {
+  position: absolute;
+  bottom: 18rem;
+  width: 20.5rem;
+  height: 3.625rem;
+  background-color: #999999;
+  font-size: 18px;
+  color: #fff;
+  border-radius: 32px;
+  text-align: center;
+  line-height: 3.625rem;
+  text-decoration: none;
+}
+
+.alert {
+  font-size: 12px;
+  color: #a2a2a2;
+}
