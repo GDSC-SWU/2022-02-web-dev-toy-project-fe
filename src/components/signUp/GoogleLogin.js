@@ -1,24 +1,31 @@
 import React from "react";
 import { postLogin } from "../../api/postLogin";
 import { FaGoogle } from "react-icons/fa";
-import { useGoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin, GoogleLogin } from "@react-oauth/google";
 // import { useGoogleLogout } from "@react-oauth/google";
 import styles from "./GoogleLogin.module.css";
 import Modal from "./Modal.js";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 export default function GoogleLogIn() {
   const navigation = useNavigate();
+  const dispatch = useDispatch();
 
   const signIn = useGoogleLogin({
-    onSuccess: (credentialResponse) => {
+    /* onSuccess: (credentialResponse) => {
       console.log(credentialResponse);
       postLogin(credentialResponse.access_token);
+      navigation("/email");
+    }, 
+    onSuccess: (res) => {
+      console.log(res);
+      postLogin(res.code);
       navigation("/email");
     },
     onError: () => {
       console.log("Login Failed");
-    },
+    },*/
   });
 
   return (
@@ -34,6 +41,15 @@ export default function GoogleLogIn() {
         <div className={styles.btnContainer}>
           {/* <Link to="/nickname"> */}
 
+          <GoogleLogin
+            onSuccess={(res) => {
+              postLogin(dispatch, res.credential);
+              navigation("/email");
+            }}
+            onError={() => {
+              console.log("Login Failed");
+            }}
+          />
           <button onClick={() => signIn()} className={styles.googleLoginButton}>
             <span className={styles.googleIcon}>
               <FaGoogle style={{ fontSize: "16px" }} />
