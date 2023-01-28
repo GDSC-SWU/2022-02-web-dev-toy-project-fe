@@ -1,7 +1,11 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import styles from "./InputTextBox.module.css";
 
 function InputTextBox(props) {
+  const handleChange = (e) => {
+    props.handleUserInput(e.target.value);
+  };
+
   return (
     <div>
       <div className={styles.subTitle}>
@@ -12,6 +16,7 @@ function InputTextBox(props) {
         placeholder={props.placeholderText}
         //   value={userWebMail}
         //   onChange={handleUserWebMail}
+        onChange={(e) => handleChange(e)}
       />
     </div>
   );

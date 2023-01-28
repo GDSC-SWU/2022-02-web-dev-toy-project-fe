@@ -1,9 +1,10 @@
 import styles from "./FoundList.module.css";
 import ListItem from "../../components/list/ListItem";
-import sample_data from "../../data/samples/sample_data.json";
 import CategoryBar from "../../components/main/CategoryBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import API from "../../api/API";
 import { ReactComponent as CheckIcon } from "../../assets/images/listPage/check.svg";
+//import postList from "../../data/samples/sample_data.json";
 
 // css color property
 const categoryBlue = getComputedStyle(
@@ -13,6 +14,21 @@ const categoryBlue = getComputedStyle(
 function FoundList() {
   const [currentCategory, setCurrentCategory] = useState("전체");
   const [isOptionChecked, setIsOptionChecked] = useState(false);
+  const [postList, setPostList] = useState();
+
+  // API 연결
+  useEffect(() => {
+    const getPosts = async () => {
+      try {
+        const result = await API.get("/post");
+        setPostList(result.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getPosts();
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -43,13 +59,13 @@ function FoundList() {
           {isOptionChecked
             ? // '찾은 것도 볼래요' 선택일 경우
               currentCategory === "전체"
-              ? sample_data.data
-                  .filter((item) => item.postStatus === "found")
+              ? postList
+                  ?.filter((item) => item.postStatus === "found")
                   .map((item, i) => (
                     <ListItem key={i} item={item} className={styles.listItem} />
                   ))
-              : sample_data.data
-                  .filter(
+              : postList
+                  ?.filter(
                     (item) =>
                       item.postStatus === "found" &&
                       item.tag === currentCategory
@@ -59,16 +75,16 @@ function FoundList() {
                   ))
             : // 기본
             currentCategory === "전체"
-            ? sample_data.data
-                .filter(
+            ? postList
+                ?.filter(
                   (item) =>
                     item.postStatus === "found" && item.status === "false"
                 )
                 .map((item, i) => (
                   <ListItem key={i} item={item} className={styles.listItem} />
                 ))
-            : sample_data.data
-                .filter(
+            : postList
+                ?.filter(
                   (item) =>
                     item.postStatus === "found" &&
                     item.status === "false" &&

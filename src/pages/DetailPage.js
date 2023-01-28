@@ -1,12 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./DetailPage.module.css";
 import Comment from "../components/Comment";
-import data from "../data/samples/sample_data.json";
+//import data from "../data/samples/sample_data.json";
+import API from "../api/API";
 
 function DetailPage() {
   const { postid } = useParams();
-  const item = data.data.find((e) => e.postId === parseInt(postid));
+  //const post = data.data.find((e) => e.postId === parseInt(postid));
+  const [post, setPost] = useState(null);
+
+  useEffect(() => {
+    const getPost = async () => {
+      try {
+        const post = await API.get("/post", { params: { id: postid } });
+        setPost(post);
+        console.log(post);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getPost().then((res) => console.log(res));
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -28,11 +44,11 @@ function DetailPage() {
         <div className={styles.postContentContainer}>
           <div className={styles.tagContainer}></div>
           <div className={styles.titleWrapper}>
-            <span className={styles.title}>{item.title}</span>
+            <span className={styles.title}>{post?.title}</span>
           </div>
           <div className={styles.locContainer}></div>
           <div className={styles.contentWrapper}>
-            <span className={styles.content}>{item.content}</span>
+            <span className={styles.content}>{post?.content}</span>
           </div>
         </div>
       </div>

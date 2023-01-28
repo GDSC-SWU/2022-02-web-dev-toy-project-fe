@@ -59,7 +59,15 @@ function CategoryBar({ currentCategory, setCurrentCategory, option }) {
   const categoryRef = useRef(null);
   const [isDrag, setIsDrag] = useState(false);
   const [startX, setStartX] = useState();
-  const categories = ["전자제품", "귀중품", "의류", "서적"];
+  const categories = [
+    "전자제품",
+    "귀중품",
+    "문구류",
+    "의류",
+    "서적",
+    "화장품",
+    "기타",
+  ];
 
   // 카테고리 좌우 드래그
   const onDragStart = (e) => {
