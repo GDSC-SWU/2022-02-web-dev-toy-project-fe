@@ -1,15 +1,28 @@
 import API from "./API";
+import setUserInfo from "../store/setUserInfo";
 
-export const postLogin = async (credential) => {
+const setUserData = (dispatch, res) => {
+  console.log(res);
+  const accessToken = res.data.data.accessToken;
+  setUserInfo(dispatch, "user", accessToken); // redux setting
+};
+
+export const postLogin = async (dispatch, credential) => {
   try {
-    const resp = await API.post("/auth/user/login", {
-      data: {
+    console.log(credential);
+    await API.post(
+      "/auth/user/login",
+      {
         credential: credential,
       },
-    });
-
-    console.log({ resp });
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    ).then((res) => setUserData(dispatch, res));
   } catch (err) {
+    console.log(err);
     console.log("server error");
   }
 };
