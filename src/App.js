@@ -5,6 +5,7 @@ import SignUpPage from "./pages/SignUpPage";
 import ConfirmWebmailPage from "./pages/ConfirmWebmailPage";
 import HomePage from "./pages/HomePage";
 import DetailPage from "./pages/DetailPage";
+import NewpostRoutes from "./components/write/NewpostRoutes";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/confirmWebMail" element={<ConfirmWebmailPage />} />
           <Route path="/home/*" element={<HomePage />} />
           <Route path="/detail/:postid" element={<DetailPage />} />
+          <Route path="/newpost/*" element={<NewpostRoutes />} />
         </Routes>
       </div>
     </div>
