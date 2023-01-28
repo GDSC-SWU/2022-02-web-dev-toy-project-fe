@@ -8,7 +8,7 @@ import { ReactComponent as CurrentLoc } from "../../assets/images/currentLoc_ico
 import { ReactComponent as CurrentLocSelected } from "../../assets/images/currentLoc_icon_selected.svg";
 import Marker from "./Marker.js";
 import ItemCarousel from "./itemCarousel/ItemCarousel";
-import postList from "../../data/samples/sample_data.json";
+//import postList from "../../data/samples/sample_data.json";
 import swu_place_data_sample from "../../data/swu_place_data_sample.json";
 
 // google map options
@@ -30,19 +30,19 @@ let currentPath = "";
 
 function MainMap({ isFound, currentCategory }) {
   // API
-  //const [postList, setPostList] = useState();
+  const [postList, setPostList] = useState();
   useEffect(() => {
     const getPosts = async () => {
       try {
-        const posts = await API.get("/post");
-        console.log(posts);
+        const result = await API.get("/post");
+        setPostList(result.data);
       } catch (err) {
         console.log(err);
       }
     };
 
     getPosts();
-  }, []);
+  }, [postList]);
 
   const mapRef = useRef(null);
   const [center, setCenter] = useState({
@@ -158,7 +158,7 @@ function MainMap({ isFound, currentCategory }) {
 
     if (currentCategory === "전체") {
       // 카테고리 미선택 시
-      postList.data.map((item) => {
+      postList?.map((item) => {
         if (item.postStatus === "found") {
           const i = foundResult.findIndex((e) => {
             return e.place === item.place;
@@ -183,7 +183,7 @@ function MainMap({ isFound, currentCategory }) {
       });
     } else {
       // 카테고리 선택 시
-      postList.data.map((item) => {
+      postList?.map((item) => {
         if (item.postStatus === "found" && currentCategory === item.tag) {
           const i = foundResult.findIndex((e) => {
             return e.place === item.place;
