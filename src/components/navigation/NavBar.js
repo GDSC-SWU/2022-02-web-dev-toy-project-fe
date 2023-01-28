@@ -65,7 +65,7 @@ function NavBar() {
         </Link>
       </div>
       <div className={styles.newPostWrapper}>
-        <Link to="/">
+        <Link to="/newpost">
           <NewPostIcon className={styles.newPostIcon} />
         </Link>
       </div>
