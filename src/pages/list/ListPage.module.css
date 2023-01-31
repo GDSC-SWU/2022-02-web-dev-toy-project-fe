@@ -2,6 +2,11 @@
   margin-bottom: 5.5625rem;
 }
 
+.topContainer {
+  position: fixed;
+  width: 100vw;
+}
+
 .tabBarContainer {
   position: relative;
   display: flex;
@@ -56,4 +61,8 @@
 
 .lostBorder {
   margin-left: 35.4%;
+}
+
+.content {
+  padding-top: 13vh;
 }
