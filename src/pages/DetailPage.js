@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import styles from "./DetailPage.module.css";
 import Comment from "../components/Comment";
 import API from "../api/API";
-import parseDate from "../util/hooks/parseDate";
+import parseDate from "../util/parseDate";
+import convertURLtoFile from "../util/convertURLtoFile";
 import foundCover from "../assets/images/postDetail/foundCover.png";
 import { ReactComponent as BackKey } from "../assets/images/back_Key.svg";
 import { ReactComponent as BellNone } from "../assets/images/postDetail/bell_none.svg";
@@ -63,10 +64,11 @@ const Tag = ({ isTag, title }) => {
 
 function DetailPage() {
   const { postid } = useParams();
-  //const post = data.data.find((e) => e.postId === parseInt(postid));
+  const navigate = useNavigate();
   const [post, setPost] = useState(null);
   const [comment, setComment] = useState(null);
   const inputRef = useRef(null);
+  const imgRef = useRef(null);
   const accessToken = useSelector((state) => state.accessToken);
 
   useEffect(() => {
@@ -75,7 +77,6 @@ function DetailPage() {
       try {
         const post = await API.get(`/post/${postid}`);
         setPost(post.data);
-        console.log(post.data);
       } catch (err) {
         console.log(err);
       }
@@ -86,7 +87,6 @@ function DetailPage() {
       try {
         const comment = await API.get(`/comment/${postid}`);
         setComment(comment.data);
-        console.log(comment.data);
       } catch (err) {
         console.log(err);
       }
@@ -124,6 +124,43 @@ function DetailPage() {
     sendComment();
   };
 
+  const sendPost = async (newStatus) => {
+    const newPost = {
+      title: post.title,
+      content: post.content,
+      place: post.place,
+      postStatus: post.postStatus,
+      status: newStatus,
+      tag: post.tag,
+    };
+
+    const formData = new FormData();
+    formData.append("json", JSON.stringify(newPost));
+    await convertURLtoFile(imgRef.current.src).then((res) =>
+      formData.append("file", res)
+    );
+
+    try {
+      await API.put(`/post/${postid}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }).then((res) => console.log(res));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const onCompleteClick = () => {
+    const temp = Object.assign({}, post);
+    const newStatus = temp.status === "true" ? "false" : "true";
+    temp.status = newStatus;
+    setPost(temp);
+
+    sendPost(newStatus);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.imageContainer}>
@@ -131,6 +168,7 @@ function DetailPage() {
           className={styles.image}
           src={require("../data/samples/sample2.png")}
           alt="Item looking for its owner"
+          ref={imgRef}
         />
         {post?.status === "true" && (
           <div className={styles.coverWrapper}>
@@ -142,7 +180,12 @@ function DetailPage() {
           </div>
         )}
         <div className={styles.topbarContainer}>
-          <div className={styles.backIconWrapper}>
+          <div
+            className={styles.backIconWrapper}
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
             <BackKey />
           </div>
           <div className={styles.topbar_right}>
@@ -166,12 +209,10 @@ function DetailPage() {
           </div>
           <div className={styles.publishDateWrapper}>
             <span className={styles.publishDate}>
-              {/* parseDate(post?.publishDate, true) */}
-              01/18
+              {post && parseDate(post.publishDate, true)}
             </span>
             <span className={styles.publishDate}>
-              {/* parseDate(post?.publishDate, false) */}
-              20:41
+              {post && parseDate(post.publishDate, false)}
             </span>
           </div>
         </div>
@@ -179,37 +220,31 @@ function DetailPage() {
         <div className={styles.postContentContainer}>
           <div className={styles.tagBarContainer}>
             <div className={styles.typeWrapper}>
-              {/*  <Tag
-                isTag={false}
-                title={post?.postStatus.includes("found") ? "습득" : "분실"}
-              /> */}
-              <Tag isTag={false} title={"습득"} />
+              {post && (
+                <Tag
+                  isTag={false}
+                  title={post.postStatus.includes("found") ? "습득" : "분실"}
+                />
+              )}
             </div>
             <div className={styles.tagWrapper}>
-              {/*  <Tag
-                isTag={true}
-                title={post?.tag}
-              /> */}
-              <Tag isTag={true} title={"전자제품"} />
+              {post && <Tag isTag={true} title={post?.tag} />}
             </div>
             <div className={styles.statusWrapper}>
-              {/* post?.status === "true" && (
+              {post && post?.status === "true" && (
                 <Tag isTag={false} title={"주인을 찾았어요!"} />
-              ) */}
-              <Tag isTag={false} title={"주인을 찾았어요!"} />
+              )}
             </div>
           </div>
           <div className={styles.titleWrapper}>
-            <span className={styles.title}>
-              {/*post?.title*/}버티컬 마우스 찾아가세요.
-            </span>
+            <span className={styles.title}>{post?.title}</span>
           </div>
           <div className={styles.locContainer}>
             <div className={styles.locIconWrapper}>
               <Loc className={styles.locIcon} />
             </div>
             <div className={styles.locWrapper}>
-              <span className={styles.loc}>{/*post?.place*/}제2과학관</span>
+              <span className={styles.loc}>{post?.place}</span>
             </div>
             <div className={styles.locDotWrapper}>
               <MiddleDot className={styles.middleDot} />
@@ -219,13 +254,14 @@ function DetailPage() {
             </div>
           </div>
           <div className={styles.contentWrapper}>
-            {/* post?.content.split("\n").map((line) => {
-              return <p className={styles.line}>{line}</p>;
-            }) */}
-            <p className={styles.line}>버티컬 마우스 찾아가세요.</p>
-            <p className={styles.line}>
-              강의실 201호 맨 앞 자리에 그대로 뒀습니다.
-            </p>
+            {post &&
+              post.content.split("\n").map((line, i) => {
+                return (
+                  <p key={`${postid}_${i}`} className={styles.line}>
+                    {line}
+                  </p>
+                );
+              })}
           </div>
         </div>
       </div>
@@ -241,26 +277,26 @@ function DetailPage() {
           </div>
         </div>
         <div className={styles.commmentListContainer}>
-          {comment?.map((e, idx) => {
-            return (
-              <Comment
-                comment={e}
-                num={idx + 1}
-                key={`${postid}_comment${idx}`}
-              />
-            );
-          })}
+          {comment &&
+            comment.map((e, idx) => {
+              return (
+                <Comment
+                  comment={e}
+                  num={idx + 1}
+                  key={`${postid}_comment${idx}`}
+                />
+              );
+            })}
         </div>
       </div>
       <div className={styles.bottomBar}>
         <div
-          className={`${styles.completeButtonContainer} ${styles.notCompleted}`}
-        >
-          {/* <div
           className={`${styles.completeButtonContainer} ${
-            post?.status === "false" ? styles.notCompleted : styles.completed
+            post &&
+            (post.status === "false" ? styles.notCompleted : styles.completed)
           }`}
-        > */}
+          onClick={onCompleteClick}
+        >
           <div className={styles.completedIconWrapper}>
             <Complete className={styles.completedIcon} />
           </div>
