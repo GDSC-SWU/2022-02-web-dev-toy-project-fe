@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import styles from "./DetailPage.module.css";
 import Comment from "../components/Comment";
 import API from "../api/API";
+import parseDate from "../util/hooks/parseDate";
 import foundCover from "../assets/images/postDetail/foundCover.png";
 import { ReactComponent as BackKey } from "../assets/images/back_Key.svg";
 import { ReactComponent as BellNone } from "../assets/images/postDetail/bell_none.svg";
@@ -63,8 +65,12 @@ function DetailPage() {
   const { postid } = useParams();
   //const post = data.data.find((e) => e.postId === parseInt(postid));
   const [post, setPost] = useState(null);
+  const [comment, setComment] = useState(null);
+  const inputRef = useRef(null);
+  const accessToken = useSelector((state) => state.accessToken);
 
   useEffect(() => {
+    // 게시글 세부 내용
     const getPost = async () => {
       try {
         const post = await API.get(`/post/${postid}`);
@@ -75,8 +81,48 @@ function DetailPage() {
       }
     };
 
+    // 댓글 목록
+    const getComment = async () => {
+      try {
+        const comment = await API.get(`/comment/${postid}`);
+        setComment(comment.data);
+        console.log(comment.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     getPost();
+    getComment();
   }, []);
+
+  // 댓글 입력
+  const onCommentSendClick = () => {
+    const content = inputRef.current.value;
+    inputRef.current.value = "";
+    console.log(content);
+
+    const sendComment = async () => {
+      try {
+        await API.post(
+          `/comment/${postid}`,
+          {
+            content: content,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        ).then((res) => console.log(res));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    sendComment();
+  };
 
   return (
     <div className={styles.container}>
@@ -84,7 +130,7 @@ function DetailPage() {
         <img
           className={styles.image}
           src={require("../data/samples/sample2.png")}
-          alt="post image"
+          alt="Item looking for its owner"
         />
         {post?.status === "true" && (
           <div className={styles.coverWrapper}>
@@ -119,8 +165,14 @@ function DetailPage() {
             <span className={styles.writer}>익명</span>
           </div>
           <div className={styles.publishDateWrapper}>
-            <span className={styles.publishDate}>01/18</span>
-            <span className={styles.publishDate}>20:41</span>
+            <span className={styles.publishDate}>
+              {/* parseDate(post?.publishDate, true) */}
+              01/18
+            </span>
+            <span className={styles.publishDate}>
+              {/* parseDate(post?.publishDate, false) */}
+              20:41
+            </span>
           </div>
         </div>
         <div className={styles.borderLine}></div>
@@ -189,7 +241,15 @@ function DetailPage() {
           </div>
         </div>
         <div className={styles.commmentListContainer}>
-          <Comment />
+          {comment?.map((e, idx) => {
+            return (
+              <Comment
+                comment={e}
+                num={idx + 1}
+                key={`${postid}_comment${idx}`}
+              />
+            );
+          })}
         </div>
       </div>
       <div className={styles.bottomBar}>
@@ -214,9 +274,13 @@ function DetailPage() {
               type="text"
               placeholder="댓글을 입력하세요."
               className={styles.commentInput}
+              ref={inputRef}
             />
           </div>
-          <div className={styles.commentSendButtonWrapper}>
+          <div
+            className={styles.commentSendButtonWrapper}
+            onClick={onCommentSendClick}
+          >
             <Send />
           </div>
         </div>
