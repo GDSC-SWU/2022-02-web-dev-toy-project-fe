@@ -1,7 +1,8 @@
 import styles from "./ItemCarousel.module.css";
 import ItemCard from "./ItemCard";
 import data from "../../../data/samples/sample_data.json";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import API from "../../../api/API";
 
 const throttle = (func, ms) => {
   let throttled = false;
@@ -18,8 +19,22 @@ const throttle = (func, ms) => {
 
 const ItemCarousel = ({ posts }) => {
   const carouselRef = useRef(null);
+  const [postList, setPostList] = useState(null);
   const [isDrag, setIsDrag] = useState(false);
   const [startX, setStartX] = useState();
+
+  useEffect(() => {
+    const getPosts = async () => {
+      try {
+        const result = await API.get("/post");
+        setPostList(result.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getPosts();
+  }, []);
 
   const onDragStart = (e) => {
     setIsDrag(true);
@@ -52,18 +67,15 @@ const ItemCarousel = ({ posts }) => {
   const onThrottleDragMove = throttle(onDragMove, delay);
 
   const render = () => {
+    console.log(postList);
     const result = [];
     posts.map((item) => {
-      const i = data.data.findIndex((e) => {
+      const i = postList?.findIndex((e) => {
         return e.postId === item;
       });
       if (i !== -1) {
         result.push(
-          <ItemCard
-            key={item}
-            className={styles.itemCard}
-            item={data.data[i]}
-          />
+          <ItemCard key={item} className={styles.itemCard} item={postList[i]} />
         );
       }
 
@@ -82,7 +94,7 @@ const ItemCarousel = ({ posts }) => {
       onMouseLeave={onDragEnd}
       ref={carouselRef}
     >
-      {render()}
+      {postList && render()}
     </div>
   );
 };
