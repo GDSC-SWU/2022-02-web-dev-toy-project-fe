@@ -1,19 +1,26 @@
 .container {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   flex-direction: row;
+  padding: 0 1.25rem;
 }
 
 .box {
   width: 375px;
   height: 100vh;
-  padding: 0 20px;
+  /* padding: 0 20px; */
   box-sizing: border-box;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
-x .star {
+
+.star {
   color: #eb3737;
   line-height: 1rem;
+  position: relative;
+  left: 2px;
+  top: 4px;
 }
 
 .confirmBtn {
@@ -35,7 +42,7 @@ x .star {
   margin-bottom: 0.5rem;
 }
 
-.locateButton {
+.locateSelect {
   width: 100%;
   height: 3.2rem;
   border: 1px solid rgba(189, 189, 189, 0.4);
@@ -51,5 +58,76 @@ x .star {
   font-size: 22px;
   line-height: 28px;
   margin-bottom: 2rem;
-  margin-top: 3rem;
+}
+
+.nextButtonUnabled {
+  position: absolute;
+  bottom: 2rem;
+  width: 90%;
+  left: 1.5rem;
+  height: 3.5rem;
+  background-color: #eaeaea;
+  border-radius: 40px;
+  line-height: 3.5rem;
+  text-align: center;
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.nextButton {
+  position: absolute;
+  bottom: 2rem;
+  width: 90%;
+  left: 1.5rem;
+  height: 3.5rem;
+  background-color: #215fff;
+  border-radius: 40px;
+  line-height: 3.5rem;
+  text-align: center;
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.locateSelect {
+  user-select: none; /* Standard syntax */
+  -webkit-user-select: none;
+  color: #000;
+  -webkit-appearance: none;
+  appearance: none;
+
+  background-image: url("../../assets/images/ic_round-keyboard-arrow-down.svg");
+  background-size: 24px;
+  background-repeat: no-repeat;
+  background-position: calc(100% - 8px) center;
+}
+
+.locateSelect:first-child {
+  background-color: aquamarine;
+}
+
+.locateSelect::set .preventSelect {
+  user-select: none; /* Standard syntax */
+  -webkit-user-select: none;
+}
+
+.locateText {
+  color: #000;
+}
+
+.locatePlaceholder {
+  color: #eee;
+  background-color: black;
+}
+
+select:invalid {
+  color: gray;
+}
+
+.inputTextBox {
+  width: 100%;
+  height: 3.2rem;
+  border: 1px solid rgba(189, 189, 189, 0.4);
+  border-radius: 5px;
+  padding: 1rem;
+  box-sizing: border-box;
 }
