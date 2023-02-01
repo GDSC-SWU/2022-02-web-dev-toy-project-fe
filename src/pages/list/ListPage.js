@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./ListPage.module.css";
 import FoundList from "./FoundList";
@@ -12,6 +12,10 @@ const tabList = {
 
 function ListPage() {
   const [tab, setTab] = useState(0);
+  const tab1Ref = useRef(null);
+  const tab2Ref = useRef(null);
+
+  console.dir(tab1Ref.current);
 
   return (
     <div className={styles.container}>
@@ -25,8 +29,9 @@ function ListPage() {
                   const tab = 0;
                   setTab(tab);
                 }}
+                ref={tab1Ref}
               >
-                찾아가세요
+                습득물
               </li>
               <li
                 className={`${styles.tabLi} ${tab === 1 && styles.activeTab}`}
@@ -34,8 +39,9 @@ function ListPage() {
                   const tab = 1;
                   setTab(tab);
                 }}
+                ref={tab2Ref}
               >
-                잃어버렸어요
+                분실물
               </li>
             </ul>
           </div>
@@ -45,13 +51,7 @@ function ListPage() {
             </Link>
           </div>
         </div>
-        <div className={styles.border}>
-          <div
-            className={`${styles.borderActive} ${
-              tab === 0 ? styles.foundBorder : styles.lostBorder
-            }`}
-          ></div>
-        </div>
+        <div className={styles.border}></div>
       </div>
       <div className={styles.content}>{tabList[tab]}</div>
     </div>
