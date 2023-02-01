@@ -18,7 +18,6 @@ function SetLocation() {
     "서울여자대학교 제2과학관",
     "서울여자대학교 인문사회관",
     "서울여자대학교 학생누리관",
-    "서울여자대학교 정문",
     "기타",
   ];
 
@@ -66,11 +65,17 @@ function SetLocation() {
             className={styles.locateSelect}
             require="true"
             onChange={handleLostLocation}
+            defaultValue={"DEFAULT"}
           >
             {/* {loc ? loc : "위치 선택하러 가기"} */}
-            {/* <option disabled className={styles.locatePlaceholder} value="">
+            <option
+              disabled
+              className={styles.locatePlaceholder}
+              value="DEFAULT"
+              hidden
+            >
               위치 선택하기
-            </option> */}
+            </option>
             {locationArray.map((item, index) => (
               <option key={index} className={styles.preventSelect} value={item}>
                 {item}
