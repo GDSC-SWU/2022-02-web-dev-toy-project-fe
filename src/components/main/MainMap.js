@@ -42,7 +42,7 @@ function MainMap({ isFound, currentCategory }) {
     };
 
     getPosts();
-  }, [postList]);
+  }, []);
 
   const mapRef = useRef(null);
   const [center, setCenter] = useState({
@@ -142,7 +142,7 @@ function MainMap({ isFound, currentCategory }) {
 
   useEffect(() => {
     addMarkers();
-  }, [isFound, currentCategory]);
+  }, [isFound, currentCategory, postList]);
 
   function addMarkers() {
     const foundResult = [...foundMarkers];
@@ -212,6 +212,7 @@ function MainMap({ isFound, currentCategory }) {
     setLostMarkers(lostMarkers);
   }
 
+  // map 위 버튼 클릭 및 carousel 구현 위한
   const [selectedMarker, setSelectedMarker] = useState([]);
   const [selectedPosts, setSelectedPosts] = useState([]);
 
@@ -246,7 +247,7 @@ function MainMap({ isFound, currentCategory }) {
                         currentCategory={currentCategory}
                         marker={marker}
                         i={i}
-                        onHandleClick={onHandleClick}
+                        onHandleClick={() => onHandleClick(i, marker.posts)}
                         isSelected={selectedMarker[i]}
                       />
                     ))
@@ -259,7 +260,7 @@ function MainMap({ isFound, currentCategory }) {
                         currentCategory={currentCategory}
                         marker={marker}
                         i={i}
-                        onHandleClick={onHandleClick}
+                        onHandleClick={() => onHandleClick(i, marker.posts)}
                         isSelected={selectedMarker[i]}
                       />
                     ))}
