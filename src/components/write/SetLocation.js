@@ -53,7 +53,9 @@ function SetLocation() {
 
   return (
     <>
-      <NavigationBar />
+      <Link to="/home/*">
+        <NavigationBar />
+      </Link>
       <div className={styles.container}>
         <div className={styles.box}>
           <div className={styles.title}>습득한 위치를 입력해 주세요</div>

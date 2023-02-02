@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import NavigationBar from '../UI/NavigationBar'
 import API from '../../api/API'
+import { Link } from 'react-router-dom'
 import { useEffect, useState, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
@@ -88,7 +89,9 @@ function CreatePost() {
 
   return (
     <>
-      <NavigationBar />
+      <Link to="/newpost">
+        <NavigationBar />
+      </Link>
       <ArticleFormWrapper>
         <Title>게시글을 작성해 주세요</Title>
         <SwuBuilding>{lostLocation}</SwuBuilding>

@@ -16,12 +16,12 @@ button {
 /* ======================================================= */
 
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 375px;
   height: 100vh;
   padding: 1.5rem;

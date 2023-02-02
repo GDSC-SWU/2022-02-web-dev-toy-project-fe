@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./SignUpPage.module.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import NavBar from "../components/UI/NavigationBar";
 
 function SignUp() {
   const [userWebMail, setUserWebMail] = useState("");
@@ -16,6 +17,9 @@ function SignUp() {
 
   return (
     <div className={styles.container}>
+      <Link to="/">
+        <NavBar />
+      </Link>
       <div className={styles.wrapper}>
         <form className="form">
           <div className={styles.form_inputs}>
