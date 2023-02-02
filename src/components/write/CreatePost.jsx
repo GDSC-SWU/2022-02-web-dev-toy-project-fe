@@ -6,20 +6,21 @@ import { useEffect, useState, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import arrowIcon from '../../assets/images/ic_round-keyboard-arrow-down.svg'
+import './CreatePost.css'
 
 // 사진 추가 - 파일 리더 사용
 function CreatePost() {
   const accessToken = useSelector((state) => state.accessToken)
   const [loc, setLoc] = useState(null) // 위치
   // const [detailLoc, setDetailLoc] = useState(null) // 세부 위치
-
   const [title, setTitle] = useState(null) // 게시글 제목
   const [type, setType] = useState(null) // 게시글 유형
   const [tag, setTag] = useState('') // 카테고리
+  const [isSelected, setIsSelected] = useState(false)
+  const typeData = ['분실물', '습득물']
   const [content, setContent] = useState(null) // 게시글 내용
   const [apiResult, setApiResult] = useState([])
   const [imageUrl, setImageUrl] = useState(null)
-  const [isSelected, setIsSelected] = useState(false)
 
   const location = useLocation()
   const imgRef = useRef()
@@ -69,6 +70,10 @@ function CreatePost() {
     tag((prev) => ({ ...prev, tag: e.target.value }))
   }
 
+  const handleType = (e) => {
+    type((prev) => ({ ...prev, type: e.target.value }))
+  }
+
   //   const onNextClick = () => {
   //     sendPost()
   //   }
@@ -103,12 +108,21 @@ function CreatePost() {
           게시글 유형<span>*</span>
         </SubTitle>
         <ToggleButtonWrapper>
-          <ToggleButton isSelected={isSelected} onClick={handleToggleButton}>
-            분실물
-          </ToggleButton>
-          <ToggleButton isSelected={isSelected} onClick={handleToggleButton}>
-            습득물
-          </ToggleButton>
+          {typeData.map((item, idx) => {
+            return (
+              <>
+                <ToggleButton
+                  value={idx}
+                  className={
+                    'toggleButton' + (idx == isSelected ? ' active' : '')
+                  }
+                  onClick={handleToggleButton}
+                >
+                  {item}
+                </ToggleButton>
+              </>
+            )
+          })}
         </ToggleButtonWrapper>
         <SubTitle>
           카테고리<span>*</span>
@@ -164,7 +178,7 @@ const ArticleFormWrapper = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   flex-basis: auto;
-  height: 66rem;
+  height: 62rem;
   width: 100vw;
   box-sizing: border-box;
 
@@ -217,7 +231,6 @@ const ToggleButton = styled.button`
   font-weight: 400;
   font-size: 0.875rem;
   color: #818181;
-  background-color: ${(props) => (props.isSelected ? '#191919' : '#fff')};
 `
 
 const ToggleButtonWrapper = styled.div`

@@ -1,0 +1,14 @@
+.toggleButton {
+  margin-bottom: 10px;
+  width: 30%;
+  color: white;
+  height: 50px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.toggleButton.active {
+  background-color: #353535;
+  color: white;
+}
