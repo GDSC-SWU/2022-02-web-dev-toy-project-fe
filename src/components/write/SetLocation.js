@@ -90,7 +90,11 @@ function SetLocation() {
           />
           {/* <button onClick={displayResult}>안녕</button> */}
           <Link
-            to={"/newpost/createpost"}
+            to={
+              lostLocation.detailLostLocation.length > 4
+                ? "/newpost/createpost"
+                : null
+            }
             className={
               lostLocation.detailLostLocation.length > 4
                 ? styles.nextButton
