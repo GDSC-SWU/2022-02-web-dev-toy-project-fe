@@ -15,7 +15,7 @@ function SearchBar({ isFound, onClickType }) {
         <div className={styles.searchTypeIconWrapper}>
           <TypeChangeIcon className={styles.searchTypeIcon} />
         </div>
-        <div className={styles.searchType}>{isFound ? "습득" : "분실"}</div>
+        <div className={styles.searchType}>{isFound ? "습득물" : "분실물"}</div>
       </div>
       <div className={styles.searchContainer}>
         <div className={styles.searchIconWrapper}>
