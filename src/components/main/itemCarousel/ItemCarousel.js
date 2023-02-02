@@ -17,7 +17,7 @@ const throttle = (func, ms) => {
   };
 };
 
-const ItemCarousel = ({ posts }) => {
+const ItemCarousel = ({ posts, setCarouselOff }) => {
   const carouselRef = useRef(null);
   const [postList, setPostList] = useState(null);
   const [isDrag, setIsDrag] = useState(false);
@@ -35,6 +35,21 @@ const ItemCarousel = ({ posts }) => {
 
     getPosts();
   }, []);
+
+  // carousel 영역 밖 클릭 시 닫기
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (carouselRef.current && !carouselRef.current.contains(e.target)) {
+        setCarouselOff();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [carouselRef, setCarouselOff]);
 
   const onDragStart = (e) => {
     setIsDrag(true);
