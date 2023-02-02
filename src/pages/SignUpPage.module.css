@@ -20,11 +20,11 @@ button {
 
 .wrapper {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   width: 375px;
   height: 100vh;
-  padding: 1.5rem;
+  padding: 0 1.5rem;
   box-sizing: border-box;
 }
 
@@ -36,7 +36,7 @@ button {
   display: block;
   font-size: 1.5rem;
   font-weight: bold;
-  margin-top: 6.9rem;
+  margin-top: 2rem;
 }
 
 .input_subTitle {
@@ -59,9 +59,9 @@ button {
   box-sizing: border-box;
   font-size: 18px;
   height: 2rem;
-  margin-top: 8px;
+  margin-top: 0.5rem;
   margin-bottom: 8px;
-  padding: 0.5rem;
+  padding-bottom: 0.5rem;
   top: 50%;
   width: 20rem;
 }
@@ -79,8 +79,8 @@ nickname_input:focus::-webkit-input-placeholder {
 }
 
 .confirmBtn {
-  position: absolute;
-  bottom: 18rem;
+  position: fixed;
+  bottom: 5rem;
   width: 20.5rem;
   height: 3.625rem;
   background-color: #294bf5;
@@ -93,8 +93,8 @@ nickname_input:focus::-webkit-input-placeholder {
 }
 
 .confirmBtnDisable {
-  position: absolute;
-  bottom: 18rem;
+  position: fixed;
+  bottom: 5rem;
   width: 20.5rem;
   height: 3.625rem;
   background-color: #999999;
@@ -108,4 +108,16 @@ nickname_input:focus::-webkit-input-placeholder {
 
 .buttonWrapper {
   padding: 1.5rem;
+}
+
+.clearInputButton {
+  width: 24px;
+  height: 24px;
+  background-image: url("../assets/images/btn_xCircle.svg");
+  /* 위치 */
+  float: right;
+  position: relative;
+  z-index: 99;
+  margin-top: -2.5rem;
+  margin-right: 0.5rem;
 }

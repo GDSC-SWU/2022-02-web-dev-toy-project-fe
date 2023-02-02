@@ -11,6 +11,11 @@ function SignUp() {
     setUserWebMail(e.target.value);
   };
 
+  // clear input field's value
+  const handleClick = () => {
+    setUserWebMail("");
+  };
+
   // const createUser = async () => {
   //   const { data } = await axios.post(`auth`);
   // };
@@ -29,10 +34,14 @@ function SignUp() {
             <p className={styles.input_subTitle}>웹메일</p>
             <input
               className={styles.input_webmail}
-              placeholder="ex) swuniv@swu.ac.kr"
+              placeholder="@swu.ac.kr"
               value={userWebMail}
               onChange={handleUserWebMail}
             />
+            <button
+              className={styles.clearInputButton}
+              onClick={handleClick}
+            ></button>
             {/* {errors.userNickname && <p>{errors.userNickname}</p>} */}
           </div>
           <Link
