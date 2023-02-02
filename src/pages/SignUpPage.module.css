@@ -15,9 +15,6 @@ button {
 }
 /* ======================================================= */
 
-.container {
-}
-
 .wrapper {
   display: flex;
   justify-content: flex-start;
@@ -97,7 +94,7 @@ nickname_input:focus::-webkit-input-placeholder {
   bottom: 5rem;
   width: 20.5rem;
   height: 3.625rem;
-  background-color: #999999;
+  background-color: #eaeaea;
   font-size: 18px;
   color: #fff;
   border-radius: 32px;
