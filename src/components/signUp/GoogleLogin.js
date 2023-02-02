@@ -28,6 +28,11 @@ export default function GoogleLogIn() {
     },*/
   });
 
+  const googleSocialLogin = useGoogleLogin({
+    onSuccess: (codeResponse) => console.log(codeResponse),
+    flow: "auth-code",
+  });
+
   return (
     <>
       <div className={styles.container}>
@@ -50,12 +55,12 @@ export default function GoogleLogIn() {
               console.log("Login Failed");
             }}
           />
-          <button onClick={() => signIn()} className={styles.googleLoginButton}>
+          {/* <button onClick={() => signIn()} className={styles.googleLoginButton}>
             <span className={styles.googleIcon}>
               <FaGoogle style={{ fontSize: "16px" }} />
             </span>
             Sign in with Google
-          </button>
+          </button> */}
 
           <div>{/* <button onClick={googleLogout}>로그아웃</button> */}</div>
           {/* </Link> */}
