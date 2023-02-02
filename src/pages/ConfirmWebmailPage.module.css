@@ -17,14 +17,14 @@ button {
 
 .container {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .wrapper {
   width: 375px;
   height: 100vh;
-  padding: 1.5rem;
+  padding: 0 1.5rem;
   box-sizing: border-box;
 }
 
@@ -36,7 +36,7 @@ button {
   display: block;
   font-size: 1.5rem;
   font-weight: bold;
-  margin-top: 6.9rem;
+  margin-top: 2rem;
 }
 
 .input_subTitle {
@@ -61,7 +61,7 @@ button {
   height: 2rem;
   margin-top: 8px;
   margin-bottom: 8px;
-  padding: 0.5rem;
+  padding-bottom: 0.5rem;
   top: 50%;
   width: 20rem;
 }
@@ -79,8 +79,8 @@ input_authNumber:focus::-webkit-input-placeholder {
 }
 
 .confirmBtn {
-  position: absolute;
-  bottom: 18rem;
+  position: fixed;
+  bottom: 5rem;
   width: 20.5rem;
   height: 3.625rem;
   background-color: #294bf5;
@@ -93,11 +93,11 @@ input_authNumber:focus::-webkit-input-placeholder {
 }
 
 .confirmBtnDisable {
-  position: absolute;
-  bottom: 18rem;
+  position: fixed;
+  bottom: 5rem;
   width: 20.5rem;
   height: 3.625rem;
-  background-color: #999999;
+  background-color: #eaeaea;
   font-size: 18px;
   color: #fff;
   border-radius: 32px;
