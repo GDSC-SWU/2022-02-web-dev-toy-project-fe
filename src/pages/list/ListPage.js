@@ -15,8 +15,6 @@ function ListPage() {
   const tab1Ref = useRef(null);
   const tab2Ref = useRef(null);
 
-  console.dir(tab1Ref.current);
-
   return (
     <div className={styles.container}>
       <div className={styles.topContainer}>

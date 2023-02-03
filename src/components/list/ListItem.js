@@ -43,7 +43,7 @@ const ListItem = ({ item }) => {
       <div
         className={styles.imgContainer}
         style={{
-          background: `url(/${item.imagePath})`,
+          background: `url(${item.imagePath})`,
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",

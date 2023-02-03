@@ -82,7 +82,6 @@ const ItemCarousel = ({ posts, setCarouselOff }) => {
   const onThrottleDragMove = throttle(onDragMove, delay);
 
   const render = () => {
-    console.log(postList);
     const result = [];
     posts.map((item) => {
       const i = postList?.findIndex((e) => {
