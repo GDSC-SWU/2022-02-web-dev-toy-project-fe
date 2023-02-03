@@ -1,21 +1,61 @@
 import React from "react";
 import styles from "./SignUpPage.module.css";
 import { Link } from "react-router-dom";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import NavBar from "../components/UI/NavigationBar";
+import axios from "axios";
+import API from "../../src/api/API";
+import { useSelector } from "react-redux";
 
 function SignUp() {
   const [userWebMail, setUserWebMail] = useState("");
   const [isEmail, setIsEmail] = useState(false);
   const [emailMessage, setEmailMessage] = useState("");
+  // const codeRef = useRef();
+  const accessToken = useSelector((state) => state.accessToken);
 
   // const handleUserWebMail = (e) => {
   //   setUserWebMail(e.target.value);
   // };
 
+  // API
+  async function postData() {
+    // const json = {
+    //   email: userWebMail,
+    // };
+    // console.log(json);
+    try {
+      //응답 성공
+      const posts = await API.post(
+        "/auth/user/email",
+        {
+          email: userWebMail,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      ).then((response) => {
+        // 응답 처리
+        console.log(response);
+      });
+      console.log(posts);
+    } catch (error) {
+      // 예외 처리
+      console.log(error);
+    }
+  }
+
   // clear input field's value
   const handleClick = () => {
     setUserWebMail("");
+  };
+
+  const onSubmitHandler = () => {
+    postData();
+    console.log(userWebMail);
   };
 
   // 이메일 유효성 검사
@@ -72,7 +112,8 @@ function SignUp() {
           <Link
             to={isEmail ? "/confirmWebMail" : null}
             className={isEmail ? styles.confirmBtn : styles.confirmBtnDisable}
-            state={userWebMail}
+            state={{ userWebMail: userWebMail }}
+            onClick={onSubmitHandler}
           >
             확인
           </Link>
