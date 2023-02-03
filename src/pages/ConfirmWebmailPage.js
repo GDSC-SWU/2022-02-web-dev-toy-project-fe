@@ -1,17 +1,56 @@
 import React from "react";
 import styles from "./ConfirmWebmailPage.module.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState, useCallback } from "react";
 import NavBar from "../components/UI/NavigationBar";
+import API from "../../src/api/API";
+import { useSelector } from "react-redux";
 
 function SignUp() {
   const [userAuthNumber, setuserAuthNumber] = useState("");
   const [isAuthNumber, setIsAuthNumber] = useState(false);
   const [AuthMessage, setAuthMessage] = useState("");
-
+  const accessToken = useSelector((state) => state.accessToken);
+  const location = useLocation();
+  const { userWebMail } = location.state;
   // const handleUserAuthNumber = (e) => {
   //   setuserAuthNumber(e.target.value);
   // };
+
+  // API
+  async function postData() {
+    // const json = {
+    //   email: userWebMail,
+    // };
+    // console.log(json);
+    try {
+      //응답 성공
+      const posts = await API.post(
+        "/auth/user/email/code",
+        {
+          email: String(userWebMail),
+          code: userAuthNumber,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      ).then((response) => {
+        // 응답 처리
+        console.log(response);
+      });
+      console.log(userWebMail);
+    } catch (error) {
+      // 예외 처리
+      console.log(error);
+    }
+  }
+
+  const onSubmitHandler = () => {
+    postData();
+  };
 
   // const createUser = async () => {
   //   const { data } = await axios.post(`auth`);
@@ -62,6 +101,7 @@ function SignUp() {
                 isAuthNumber ? styles.confirmBtn : styles.confirmBtnDisable
               }
               state={isAuthNumber}
+              onClick={onSubmitHandler}
             >
               학교 인증 완료하기
             </Link>
