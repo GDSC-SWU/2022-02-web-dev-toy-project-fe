@@ -1,7 +1,8 @@
 import styles from "./ItemCarousel.module.css";
 import ItemCard from "./ItemCard";
 import data from "../../../data/samples/sample_data.json";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import API from "../../../api/API";
 
 const throttle = (func, ms) => {
   let throttled = false;
@@ -16,10 +17,39 @@ const throttle = (func, ms) => {
   };
 };
 
-const ItemCarousel = ({ posts }) => {
+const ItemCarousel = ({ posts, setCarouselOff }) => {
   const carouselRef = useRef(null);
+  const [postList, setPostList] = useState(null);
   const [isDrag, setIsDrag] = useState(false);
   const [startX, setStartX] = useState();
+
+  useEffect(() => {
+    const getPosts = async () => {
+      try {
+        const result = await API.get("/post");
+        setPostList(result.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getPosts();
+  }, []);
+
+  // carousel 영역 밖 클릭 시 닫기
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (carouselRef.current && !carouselRef.current.contains(e.target)) {
+        setCarouselOff();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [carouselRef, setCarouselOff]);
 
   const onDragStart = (e) => {
     setIsDrag(true);
@@ -54,16 +84,12 @@ const ItemCarousel = ({ posts }) => {
   const render = () => {
     const result = [];
     posts.map((item) => {
-      const i = data.data.findIndex((e) => {
+      const i = postList?.findIndex((e) => {
         return e.postId === item;
       });
       if (i !== -1) {
         result.push(
-          <ItemCard
-            key={item}
-            className={styles.itemCard}
-            item={data.data[i]}
-          />
+          <ItemCard key={item} className={styles.itemCard} item={postList[i]} />
         );
       }
 
@@ -82,7 +108,7 @@ const ItemCarousel = ({ posts }) => {
       onMouseLeave={onDragEnd}
       ref={carouselRef}
     >
-      {render()}
+      {postList && render()}
     </div>
   );
 };

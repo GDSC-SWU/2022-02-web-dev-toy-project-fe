@@ -1,0 +1,58 @@
+.container {
+}
+
+.writerContainer {
+  display: flex;
+  gap: 0.34375rem;
+  margin: 0.75rem 1.84375rem 0.25rem 1.84375rem;
+}
+
+.writerWrapper {
+  margin-top: 0.4375rem;
+}
+
+.writer {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: -0.055em;
+  color: #202020;
+}
+
+.contentWrapper {
+  margin-right: 1.96875rem;
+  margin-bottom: 0.1875rem;
+  margin-left: 1.96875rem;
+}
+
+.line {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #202020;
+}
+
+.publishDateContainer {
+  display: flex;
+  gap: 0.21875rem;
+  margin-left: 1.96875rem;
+}
+
+.publishDate {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 13px;
+  letter-spacing: -0.04em;
+  color: #b8b8b8;
+}
+
+.border {
+  position: relative;
+  width: 92%;
+  left: 4%;
+  border: 1px solid #ececec;
+  margin-top: 0.75rem;
+}

@@ -11,7 +11,7 @@ const maincolor = getComputedStyle(document.documentElement).getPropertyValue(
 );
 
 const ItemCard = ({ item }) => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const Enum_choice = {
     전자제품: <Headphones stroke={maincolor} />,
     귀중품: <Wallet stroke={maincolor} />,
@@ -20,7 +20,6 @@ const ItemCard = ({ item }) => {
   };
 
   const onItemClick = () => {
-    console.log(item);
     navigate(`/detail/${item.postId}`);
   };
 
@@ -29,7 +28,7 @@ const ItemCard = ({ item }) => {
       <div
         className={styles.imageContainer}
         style={{
-          background: `url(/${item.imagePath})`,
+          background: `url(${item.imagePath})`,
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
@@ -40,7 +39,7 @@ const ItemCard = ({ item }) => {
           <span className={styles.title}>{item.title}</span>
         </div>
         <div className={styles.locContainer}>
-          <Loc className={styles.locIcon} />
+          <Loc className={styles.locIcon} fill={"#929292"} stroke={"#929292"} />
           <span className={styles.loc}>{item.place}</span>
         </div>
         <div className={styles.tagContainer}>
