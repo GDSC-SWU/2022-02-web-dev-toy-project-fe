@@ -53,7 +53,7 @@ function SetLocation() {
 
   return (
     <>
-      <Link to="/home/*">
+      <Link to="/home">
         <NavigationBar />
       </Link>
       <div className={styles.container}>
