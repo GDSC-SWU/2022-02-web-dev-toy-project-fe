@@ -11,65 +11,104 @@ import './CreatePost.css'
 
 // 사진 추가 - 파일 리더 사용
 function CreatePost() {
+  const location = useLocation()
+  const { lostLocation, detailLostLocation } = location.state
   const accessToken = useSelector((state) => state.accessToken)
-  const [loc, setLoc] = useState(null) // 위치
+  const [loc, setLoc] = useState(location.state.lostLocation) // 위치
   // const [detailLoc, setDetailLoc] = useState(null) // 세부 위치
   const [title, setTitle] = useState(null) // 게시글 제목
-  const [type, setType] = useState(null) // 게시글 유형
+  const [type, setType] = useState('lost') // 게시글 유형(postStatus)
   const [tag, setTag] = useState('') // 카테고리
   const [isSelected, setIsSelected] = useState(false)
   const typeData = ['분실물', '습득물']
   const [content, setContent] = useState(null) // 게시글 내용
-  const [apiResult, setApiResult] = useState([])
+  // const [apiResult, setApiResult] = useState([])
   const [imageUrl, setImageUrl] = useState(null)
 
-  const location = useLocation()
   const imgRef = useRef()
 
-  const { lostLocation, detailLostLocation } = location.state
+  const categoryArray = [
+    '전자제품',
+    '귀중품',
+    '문구류',
+    '의류',
+    '서적',
+    '화장품',
+    '기타',
+  ]
 
   // state 변경 및 API 연결
   const sendPost = async () => {
-    const requestParams = {
+    const file = imgRef.current.files[0]
+    const json = {
       title: title,
       content: content,
       place: loc,
+      // postStatus: type,
       status: 'lost', // 상태 (주인 찾았는지 여부) -> 처음 게시물 작성할 때는 항상 "Lost"
-      tag: tag,
+      tag: tag.tag,
     }
+    console.log(json)
 
-    const { data } = await API.post('/post', requestParams, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
+    // API
+    try {
+      const formData = new FormData()
+      formData.append('json', JSON.stringify(json))
+      formData.append('file', file)
+      /* key 확인하기 */
+      for (let key of formData.keys()) {
+        console.log(key)
+      }
+      /* value 확인하기 */
+      for (let value of formData.values()) {
+        console.log(value)
+      }
 
-    setApiResult(data)
+      const posts = await API.post('/post', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }).then((response) => {
+        // 응답 처리
+        console.log(response)
+      })
+      console.log(posts)
+    } catch (error) {
+      // 예외 처리
+      console.log(error)
+    }
+  }
+
+  const onSubmitHandler = () => {
+    sendPost()
   }
 
   const onClickFileButton = () => {
     imgRef.current.click()
   }
 
-  const onChangeImage = () => {
-    const reader = new FileReader()
-    const file = imgRef.current.files[0]
-    console.log(file)
+  // const onChangeImage = () => {
+  //   const reader = new FileReader()
+  //   const file = imgRef.current.files[0]
+  //   console.log(file)
 
-    reader.readAsDataURL(file)
-    reader.onloadend = () => {
-      setImageUrl(reader.result)
-      console.log('이미지주소', reader.result)
-    }
-  }
+  //   reader.readAsDataURL(file)
+  //   reader.onloadend = () => {
+  //     setImageUrl(reader.result)
+  //     console.log('이미지주소', reader.result)
+  //   }
+  // }
 
   const handleToggleButton = () => {
     setIsSelected((prev) => !prev)
   }
 
   const handleTag = (e) => {
-    tag((prev) => ({ ...prev, tag: e.target.value }))
+    setTag((prev) => ({ ...prev, tag: e.target.value }))
   }
+
+  console.log(tag)
 
   const handleType = (e) => {
     type((prev) => ({ ...prev, type: e.target.value }))
@@ -113,7 +152,7 @@ function CreatePost() {
         <ToggleButtonWrapper>
           {typeData.map((item, idx) => {
             return (
-              <>
+              <div key={idx}>
                 <ToggleButton
                   value={idx}
                   className={
@@ -123,7 +162,7 @@ function CreatePost() {
                 >
                   {item}
                 </ToggleButton>
-              </>
+              </div>
             )
           })}
         </ToggleButtonWrapper>
@@ -134,27 +173,29 @@ function CreatePost() {
           require="true"
           onChange={handleTag}
           defaultValue={'DEFAULT'}
+          className="locateSelect"
         >
           <option disabled value="DEFAULT" hidden>
-            위치 선택하기
+            카테고리 선택하기
           </option>
-          <option value="전자제품">전자제품</option>
-          <option value="귀중품">귀중품</option>
-          <option value="문구류">문구류</option>
-          <option value="의류">의류</option>
-          <option value="서적">서적</option>
-          <option value="화장품">화장품</option>
-          <option value="기타">기타</option>
+          {categoryArray.map((item, index) => (
+            <option key={index} className="preventSelect" value={item}>
+              {item}
+            </option>
+          ))}
         </CategoryOption>
         <SubTitle>
           사진을 첨부해 주세요<span>*</span>
         </SubTitle>
-        <ImageUpload
-          type="file"
-          accept="image/*"
-          onChange={onChangeImage}
-          ref={imgRef}
-        />
+        <form encType="multipart/form-data" onSubmit={sendPost}>
+          <ImageUpload
+            name="file"
+            type="file"
+            accept="image/*"
+            // onChange={onChangeImage}
+            ref={imgRef}
+          />
+        </form>
         <ImageUploadButton onClick={onClickFileButton}>+</ImageUploadButton>
         <SubTitle>
           게시글 내용<span>*</span>
@@ -168,7 +209,7 @@ function CreatePost() {
             }}
           ></TextBox>
         </TextBoxArea>
-        <NextButton>다음</NextButton>
+        <NextButton onClick={() => onSubmitHandler()}>다음</NextButton>
       </ArticleFormWrapper>
     </>
   )
