@@ -67,9 +67,23 @@ function DetailPage() {
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
   const [comment, setComment] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
   const inputRef = useRef(null);
   const imgRef = useRef(null);
+  const commentRef = useRef(null);
+  const endRef = useRef(null);
+  const scrollRef = useRef(null);
   const accessToken = useSelector((state) => state.accessToken);
+
+  // 댓글 목록
+  const getComment = async () => {
+    try {
+      const comment = await API.get(`/comment/${postid}`);
+      setComment(comment.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     // 게시글 세부 내용
@@ -82,25 +96,23 @@ function DetailPage() {
       }
     };
 
-    // 댓글 목록
-    const getComment = async () => {
-      try {
-        const comment = await API.get(`/comment/${postid}`);
-        setComment(comment.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
     getPost();
     getComment();
   }, []);
+
+  // set scroll view
+  useEffect(() => {
+    if (isLoaded) {
+      endRef.current.scrollIntoView({ behavior: "smooth" });
+      const temp = false;
+      setIsLoaded(temp);
+    }
+  }, [isLoaded]);
 
   // 댓글 입력
   const onCommentSendClick = () => {
     const content = inputRef.current.value;
     inputRef.current.value = "";
-    console.log(content);
 
     const sendComment = async () => {
       try {
@@ -115,7 +127,13 @@ function DetailPage() {
               Authorization: `Bearer ${accessToken}`,
             },
           }
-        ).then((res) => console.log(res));
+        );
+
+        await getComment();
+
+        // scroll view 조정을 위한 state 변경
+        const temp = true;
+        setIsLoaded(temp);
       } catch (err) {
         console.log(err);
       }
@@ -163,131 +181,140 @@ function DetailPage() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.imageContainer}>
-        <img
-          className={styles.image}
-          src={require("../data/samples/sample2.png")}
-          alt="Item looking for its owner"
-          ref={imgRef}
-        />
-        {post?.status === "true" && (
-          <div className={styles.coverWrapper}>
-            <img
-              className={styles.cover}
-              src={foundCover}
-              alt="This item has found its owner."
-            />
-          </div>
-        )}
-        <div className={styles.topbarContainer}>
-          <div
-            className={styles.backIconWrapper}
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            <BackKey />
-          </div>
-          <div className={styles.topbar_right}>
-            <div className={styles.notifiIconWrapper}>
-              <BellNone />
+      <div className={styles.content}>
+        <div className={styles.imageContainer}>
+          <img
+            className={styles.image}
+            src={require("../data/samples/sample2.png")}
+            alt="Item looking for its owner"
+            ref={imgRef}
+          />
+          {post?.status === "true" && (
+            <div className={styles.coverWrapper}>
+              <img
+                className={styles.cover}
+                src={foundCover}
+                alt="This item has found its owner."
+              />
             </div>
-            <div className={styles.shareIconWrapper}>
-              <Share />
+          )}
+          <div className={styles.topbarContainer}>
+            <div
+              className={styles.backIconWrapper}
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              <BackKey />
+            </div>
+            <div className={styles.topbar_right}>
+              <div className={styles.notifiIconWrapper}>
+                <BellNone />
+              </div>
+              <div className={styles.shareIconWrapper}>
+                <Share />
+              </div>
             </div>
           </div>
+          <div className={styles.imageOrderContainer}></div>
         </div>
-        <div className={styles.imageOrderContainer}></div>
-      </div>
-      <div className={styles.post}>
-        <div className={styles.postInfoContainer}>
-          <div className={styles.profileIconWrapper}>
-            <Profile className={styles.profileIcon} />
+        <div className={styles.post}>
+          <div className={styles.postInfoContainer}>
+            <div className={styles.profileIconWrapper}>
+              <Profile className={styles.profileIcon} />
+            </div>
+            <div className={styles.writerWrapper}>
+              <span className={styles.writer}>익명</span>
+            </div>
+            <div className={styles.publishDateWrapper}>
+              <span className={styles.publishDate}>
+                {post && parseDate(post.publishDate, true)}
+              </span>
+              <span className={styles.publishDate}>
+                {post && parseDate(post.publishDate, false)}
+              </span>
+            </div>
           </div>
-          <div className={styles.writerWrapper}>
-            <span className={styles.writer}>익명</span>
-          </div>
-          <div className={styles.publishDateWrapper}>
-            <span className={styles.publishDate}>
-              {post && parseDate(post.publishDate, true)}
-            </span>
-            <span className={styles.publishDate}>
-              {post && parseDate(post.publishDate, false)}
-            </span>
-          </div>
-        </div>
-        <div className={styles.borderLine}></div>
-        <div className={styles.postContentContainer}>
-          <div className={styles.tagBarContainer}>
-            <div className={styles.typeWrapper}>
-              {post && (
-                <Tag
-                  isTag={false}
-                  title={post.postStatus.includes("found") ? "습득" : "분실"}
+          <div className={styles.borderLine}></div>
+          <div className={styles.postContentContainer}>
+            <div className={styles.tagBarContainer}>
+              <div className={styles.typeWrapper}>
+                {post && (
+                  <Tag
+                    isTag={false}
+                    title={post.postStatus.includes("found") ? "습득" : "분실"}
+                  />
+                )}
+              </div>
+              <div className={styles.tagWrapper}>
+                {post && <Tag isTag={true} title={post?.tag} />}
+              </div>
+              <div className={styles.statusWrapper}>
+                {post && post?.status === "true" && (
+                  <Tag isTag={false} title={"주인을 찾았어요!"} />
+                )}
+              </div>
+            </div>
+            <div className={styles.titleWrapper}>
+              <span className={styles.title}>{post?.title}</span>
+            </div>
+            <div className={styles.locContainer}>
+              <div className={styles.locIconWrapper}>
+                <Loc
+                  className={styles.locIcon}
+                  fill={"#929292"}
+                  stroke={"#929292"}
                 />
-              )}
+              </div>
+              <div className={styles.locWrapper}>
+                <span className={styles.loc}>{post?.place}</span>
+              </div>
+              <div className={styles.locDotWrapper}>
+                <MiddleDot className={styles.middleDot} />
+              </div>
+              <div className={styles.detailLocWrapper}>
+                <span className={styles.detailLoc}>
+                  304호 첫 번째 줄 책상 위
+                </span>
+              </div>
             </div>
-            <div className={styles.tagWrapper}>
-              {post && <Tag isTag={true} title={post?.tag} />}
-            </div>
-            <div className={styles.statusWrapper}>
-              {post && post?.status === "true" && (
-                <Tag isTag={false} title={"주인을 찾았어요!"} />
-              )}
-            </div>
-          </div>
-          <div className={styles.titleWrapper}>
-            <span className={styles.title}>{post?.title}</span>
-          </div>
-          <div className={styles.locContainer}>
-            <div className={styles.locIconWrapper}>
-              <Loc className={styles.locIcon} />
-            </div>
-            <div className={styles.locWrapper}>
-              <span className={styles.loc}>{post?.place}</span>
-            </div>
-            <div className={styles.locDotWrapper}>
-              <MiddleDot className={styles.middleDot} />
-            </div>
-            <div className={styles.detailLocWrapper}>
-              <span className={styles.detailLoc}>304호 첫 번째 줄 책상 위</span>
+            <div className={styles.contentWrapper}>
+              {post &&
+                post.content.split("\n").map((line, i) => {
+                  return (
+                    <p key={`${postid}_${i}`} className={styles.line}>
+                      {line}
+                    </p>
+                  );
+                })}
             </div>
           </div>
-          <div className={styles.contentWrapper}>
-            {post &&
-              post.content.split("\n").map((line, i) => {
+        </div>
+        <div className={styles.commentContainer} ref={commentRef}>
+          <div className={styles.commentHelpContainer}>
+            <div className={styles.commentHelpWrapper}>
+              <p className={styles.commentHelp}>
+                분실물 보관처에 물건을 맡기셨다면,
+              </p>
+              <p className={styles.commentHelp}>
+                분실물이 주인을 잘 찾아갈 수 있도록 댓글을 달아주세요!
+              </p>
+            </div>
+          </div>
+          <div className={styles.commmentListContainer}>
+            {comment &&
+              comment.map((e, idx) => {
                 return (
-                  <p key={`${postid}_${i}`} className={styles.line}>
-                    {line}
-                  </p>
+                  <Comment
+                    comment={e}
+                    num={idx + 1}
+                    key={`${postid}_comment${idx}`}
+                  />
                 );
               })}
           </div>
         </div>
-      </div>
-      <div className={styles.commentContainer}>
-        <div className={styles.commentHelpContainer}>
-          <div className={styles.commentHelpWrapper}>
-            <p className={styles.commentHelp}>
-              분실물 보관처에 물건을 맡기셨다면,
-            </p>
-            <p className={styles.commentHelp}>
-              분실물이 주인을 잘 찾아갈 수 있도록 댓글을 달아주세요!
-            </p>
-          </div>
-        </div>
-        <div className={styles.commmentListContainer}>
-          {comment &&
-            comment.map((e, idx) => {
-              return (
-                <Comment
-                  comment={e}
-                  num={idx + 1}
-                  key={`${postid}_comment${idx}`}
-                />
-              );
-            })}
-        </div>
+        <div ref={endRef} />
       </div>
       <div className={styles.bottomBar}>
         <div

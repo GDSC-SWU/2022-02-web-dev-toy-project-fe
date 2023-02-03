@@ -1,3 +1,8 @@
+.content {
+  height: calc(100vh - 6.5rem);
+  overflow-y: scroll;
+}
+
 .imageContainer {
   width: 100vw;
   height: 269px;
@@ -40,12 +45,6 @@
   margin-left: auto;
 }
 
-.notifiIconWrapper {
-}
-
-.shareIconWrapper {
-}
-
 .postInfoContainer {
   display: grid;
   grid-template-columns: 40px 1fr;
@@ -57,12 +56,6 @@
   grid-row: 1/3;
 }
 
-.profileIcon {
-}
-
-.writerWrapper {
-}
-
 .writer {
   font-style: normal;
   font-weight: 500;
@@ -70,9 +63,6 @@
   line-height: 20px;
   letter-spacing: -0.055em;
   color: #4a4a4a;
-}
-
-.publishDateWrapper {
 }
 
 .publishDate {
@@ -205,10 +195,6 @@
   line-height: 170%;
   letter-spacing: -0.03em;
   color: #4a4a4a;
-}
-
-.commentContainer {
-  margin-bottom: 6.5rem;
 }
 
 .commentHelpContainer {
