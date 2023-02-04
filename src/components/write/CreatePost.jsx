@@ -1,92 +1,88 @@
-import React from 'react'
-import styled from 'styled-components'
-import NavigationBar from '../UI/NavigationBar'
-import API from '../../api/API'
-import { Link } from 'react-router-dom'
-import { useEffect, useState, useRef } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import arrowIcon from '../../assets/images/ic_round-keyboard-arrow-down.svg'
-import './CreatePost.css'
+import React from "react";
+import styled from "styled-components";
+import NavigationBar from "../UI/NavigationBar";
+import API from "../../api/API";
+import { Link } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import arrowIcon from "../../assets/images/ic_round-keyboard-arrow-down.svg";
+import "./CreatePost.css";
 
 // 사진 추가 - 파일 리더 사용
 function CreatePost() {
-  const location = useLocation()
-  const { lostLocation, detailLostLocation } = location.state
-  const accessToken = useSelector((state) => state.accessToken)
-  const [loc, setLoc] = useState(location.state.lostLocation) // 위치
-  // const [detailLoc, setDetailLoc] = useState(null) // 세부 위치
-  const [title, setTitle] = useState(null) // 게시글 제목
-  const [type, setType] = useState('lost') // 게시글 유형(postStatus)
-  const [tag, setTag] = useState('') // 카테고리
-  const [isSelected, setIsSelected] = useState(false)
-  const typeData = ['분실물', '습득물']
-  const [content, setContent] = useState(null) // 게시글 내용
+  const location = useLocation();
+  const accessToken = useSelector((state) => state.accessToken);
+  const [loc, setLoc] = useState(null); // 위치
+  const [detailLoc, setDetailLoc] = useState(null); // 세부 위치
+  const [title, setTitle] = useState(null); // 게시글 제목
+  const [type, setType] = useState("lost"); // 게시글 유형(postStatus)
+  const [tag, setTag] = useState(""); // 카테고리
+  const [isSelected, setIsSelected] = useState(false);
+  const typeData = ["분실물", "습득물"];
+  const [content, setContent] = useState(null); // 게시글 내용
   // const [apiResult, setApiResult] = useState([])
-  const [imageUrl, setImageUrl] = useState(null)
+  const [imageUrl, setImageUrl] = useState(null);
 
-  const imgRef = useRef()
+  useEffect(() => {
+    if (location.state) {
+      const newLocation = location.state.lostLocation;
+      const detailLocation = location.state.detailLostLocation;
+      setLoc(newLocation);
+      setDetailLoc(detailLocation);
+    }
+  }, [loc, detailLoc]);
+
+  const imgRef = useRef();
 
   const categoryArray = [
-    '전자제품',
-    '귀중품',
-    '문구류',
-    '의류',
-    '서적',
-    '화장품',
-    '기타',
-  ]
+    "전자제품",
+    "귀중품",
+    "문구류",
+    "의류",
+    "서적",
+    "화장품",
+    "기타",
+  ];
 
-  // state 변경 및 API 연결
+  //API 연결
   const sendPost = async () => {
-    const file = imgRef.current.files[0]
+    const file = imgRef.current.files[0];
     const json = {
       title: title,
       content: content,
       place: loc,
-      // postStatus: type,
-      status: 'lost', // 상태 (주인 찾았는지 여부) -> 처음 게시물 작성할 때는 항상 "Lost"
+      //postStatus: type,
+      status: "lost", // 상태 (주인 찾았는지 여부) -> 처음 게시물 작성할 때는 항상 "Lost"
       tag: tag.tag,
-    }
-    console.log(json)
+    };
+    console.log(json);
 
-    // API
     try {
-      const formData = new FormData()
-      formData.append('json', JSON.stringify(json))
-      formData.append('file', file)
-      /* key 확인하기 */
-      for (let key of formData.keys()) {
-        console.log(key)
-      }
-      /* value 확인하기 */
-      for (let value of formData.values()) {
-        console.log(value)
-      }
+      const formData = new FormData();
+      formData.append("json", JSON.stringify(json));
+      formData.append("file", file);
 
-      const posts = await API.post('/post', formData, {
+      const post = await API.post("/post", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${accessToken}`,
         },
-      }).then((response) => {
-        // 응답 처리
-        console.log(response)
-      })
-      console.log(posts)
+      });
+      console.log(post);
     } catch (error) {
       // 예외 처리
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
-  const onSubmitHandler = () => {
-    sendPost()
-  }
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+  };
 
   const onClickFileButton = () => {
-    imgRef.current.click()
-  }
+    imgRef.current.click();
+  };
 
   // const onChangeImage = () => {
   //   const reader = new FileReader()
@@ -101,18 +97,16 @@ function CreatePost() {
   // }
 
   const handleToggleButton = () => {
-    setIsSelected((prev) => !prev)
-  }
+    setIsSelected((prev) => !prev);
+  };
 
   const handleTag = (e) => {
-    setTag((prev) => ({ ...prev, tag: e.target.value }))
-  }
-
-  console.log(tag)
+    setTag((prev) => ({ ...prev, tag: e.target.value }));
+  };
 
   const handleType = (e) => {
-    type((prev) => ({ ...prev, type: e.target.value }))
-  }
+    type((prev) => ({ ...prev, type: e.target.value }));
+  };
 
   //   const onNextClick = () => {
   //     sendPost()
@@ -133,8 +127,8 @@ function CreatePost() {
       </Link>
       <ArticleFormWrapper>
         <Title>게시글을 작성해 주세요</Title>
-        <SwuBuilding>{lostLocation}</SwuBuilding>
-        <DetailBuilding>{detailLostLocation}</DetailBuilding>
+        <SwuBuilding>{loc}</SwuBuilding>
+        <DetailBuilding>{detailLoc}</DetailBuilding>
         <DevideLine></DevideLine>
         <SubTitle>
           제목<span>*</span>
@@ -142,8 +136,8 @@ function CreatePost() {
         <CustomInput
           placeholder="게시글 제목을 입력해주세요"
           onChange={(e) => {
-            const value = e.target.value
-            setTitle(value)
+            const value = e.target.value;
+            setTitle(value);
           }}
         />
         <SubTitle>
@@ -156,14 +150,14 @@ function CreatePost() {
                 <ToggleButton
                   value={idx}
                   className={
-                    'toggleButton' + (idx == isSelected ? ' active' : '')
+                    "toggleButton" + (idx == isSelected ? " active" : "")
                   }
                   onClick={handleToggleButton}
                 >
                   {item}
                 </ToggleButton>
               </div>
-            )
+            );
           })}
         </ToggleButtonWrapper>
         <SubTitle>
@@ -172,7 +166,7 @@ function CreatePost() {
         <CategoryOption
           require="true"
           onChange={handleTag}
-          defaultValue={'DEFAULT'}
+          defaultValue={"DEFAULT"}
           className="locateSelect"
         >
           <option disabled value="DEFAULT" hidden>
@@ -187,7 +181,10 @@ function CreatePost() {
         <SubTitle>
           사진을 첨부해 주세요<span>*</span>
         </SubTitle>
-        <form encType="multipart/form-data" onSubmit={sendPost}>
+        <form
+          encType="multipart/form-data"
+          onSubmit={(e) => onSubmitHandler(e)}
+        >
           <ImageUpload
             name="file"
             type="file"
@@ -195,8 +192,10 @@ function CreatePost() {
             // onChange={onChangeImage}
             ref={imgRef}
           />
+          <ImageUploadButton type="submit" onClick={onClickFileButton}>
+            +
+          </ImageUploadButton>
         </form>
-        <ImageUploadButton onClick={onClickFileButton}>+</ImageUploadButton>
         <SubTitle>
           게시글 내용<span>*</span>
         </SubTitle>
@@ -204,15 +203,15 @@ function CreatePost() {
           <TextBox
             placeholder="게시글 제목을 입력해주세요"
             onChange={(e) => {
-              const value = e.target.value
-              setContent(value)
+              const value = e.target.value;
+              setContent(value);
             }}
           ></TextBox>
         </TextBoxArea>
-        <NextButton onClick={() => onSubmitHandler()}>다음</NextButton>
+        <NextButton onClick={() => sendPost()}>다음</NextButton>
       </ArticleFormWrapper>
     </>
-  )
+  );
 }
 
 const ArticleFormWrapper = styled.div`
@@ -231,7 +230,7 @@ const ArticleFormWrapper = styled.div`
   div {
     align-self: flex-start;
   }
-`
+`;
 
 const CustomInput = styled.input`
   width: 100%;
@@ -242,14 +241,14 @@ const CustomInput = styled.input`
   border-radius: 5px;
   padding: 1rem;
   box-sizing: border-box;
-`
+`;
 
 const Title = styled.h2`
   font-weight: 700;
   font-size: 1.375rem;
   line-height: 1.75rem;
   align-items: flex-start;
-`
+`;
 
 const SubTitle = styled.p`
   font-weight: 400;
@@ -263,7 +262,7 @@ const SubTitle = styled.p`
     left: 2px;
     top: 4px;
   }
-`
+`;
 
 const ToggleButton = styled.button`
   width: 4.75rem;
@@ -275,7 +274,7 @@ const ToggleButton = styled.button`
   font-weight: 400;
   font-size: 0.875rem;
   color: #818181;
-`
+`;
 
 const ToggleButtonWrapper = styled.div`
   margin-top: 0.5rem;
@@ -283,12 +282,12 @@ const ToggleButtonWrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 0.75rem;
-`
+`;
 
 const TextBoxArea = styled.div`
   width: 100%;
   height: 7.5rem;
-`
+`;
 
 const TextBox = styled.textarea`
   width: 100%;
@@ -300,7 +299,7 @@ const TextBox = styled.textarea`
   padding: 1rem;
   box-sizing: border-box;
   resize: none;
-`
+`;
 
 const NextButton = styled.button`
   /* position: absolute;
@@ -315,7 +314,7 @@ const NextButton = styled.button`
   color: #ffffff;
   margin-top: 2.5rem;
   margin-bottom: 2rem;
-`
+`;
 
 const CategoryOption = styled.select`
   width: 100%;
@@ -335,13 +334,13 @@ const CategoryOption = styled.select`
   background-size: 24px;
   background-repeat: no-repeat;
   background-position: calc(100% - 8px) center;
-`
+`;
 
 const SwuBuilding = styled.h2`
   font-size: 1rem;
   margin-top: 2.5rem;
   font-weight: normal;
-`
+`;
 
 const DetailBuilding = styled.div`
   font-weight: normal;
@@ -349,7 +348,7 @@ const DetailBuilding = styled.div`
   color: #bbbbbb;
   text-align: left;
   margin-top: 0.5rem;
-`
+`;
 
 const DevideLine = styled.div`
   background-color: #f8f8f8;
@@ -361,11 +360,11 @@ const DevideLine = styled.div`
   margin-left: calc(-50vw + 50%);
   margin-top: 1.5rem;
   //
-`
+`;
 
 const ImageUpload = styled.input`
   display: none;
-`
+`;
 
 const ImageUploadButton = styled.button`
   width: 80px;
@@ -375,6 +374,6 @@ const ImageUploadButton = styled.button`
   font-weight: 100;
   text-align: center;
   border-radius: 8px;
-`
+`;
 
-export default CreatePost
+export default CreatePost;
