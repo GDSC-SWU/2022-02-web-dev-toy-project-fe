@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import NavigationBar from '../UI/NavigationBar'
 import API from '../../api/API'
 import { Link } from 'react-router-dom'
-import { useEffect, useState, useRef } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useState, useRef } from 'react'
+import { useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import arrowIcon from '../../assets/images/ic_round-keyboard-arrow-down.svg'
 import './CreatePost.css'
@@ -23,7 +23,7 @@ function CreatePost() {
   const typeData = ['분실물', '습득물']
   const [content, setContent] = useState(null) // 게시글 내용
   // const [apiResult, setApiResult] = useState([])
-  const [imageUrl, setImageUrl] = useState(null)
+  // const [imageUrl, setImageUrl] = useState(null)
 
   const imgRef = useRef()
 
@@ -209,7 +209,11 @@ function CreatePost() {
             }}
           ></TextBox>
         </TextBoxArea>
-        <NextButton onClick={() => onSubmitHandler()}>다음</NextButton>
+        <StyeldLink to="/detail/:postid">
+          <NextButton onClick={() => onSubmitHandler()} className="nextButton">
+            다음
+          </NextButton>
+        </StyeldLink>
       </ArticleFormWrapper>
     </>
   )
@@ -375,6 +379,11 @@ const ImageUploadButton = styled.button`
   font-weight: 100;
   text-align: center;
   border-radius: 8px;
+`
+
+const StyeldLink = styled(Link)`
+  width: 100%;
+  height: 3.5rem;
 `
 
 export default CreatePost
