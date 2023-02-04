@@ -1,5 +1,5 @@
 import React from "react";
-import GoogleLogin from "../components/GoogleLogin.js";
+import GoogleLogin from "../components/signUp/GoogleLogin.js";
 
 export default function LoginPage() {
   return (
