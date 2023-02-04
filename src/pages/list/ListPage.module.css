@@ -2,11 +2,16 @@
   margin-bottom: 5.5625rem;
 }
 
+.topContainer {
+  position: fixed;
+  width: 100vw;
+}
+
 .tabBarContainer {
   position: relative;
   display: flex;
   margin-top: 69px;
-  left: 7.7%;
+  left: 12%;
   width: 87.5%;
 }
 
@@ -24,36 +29,48 @@
   text-align: center;
   letter-spacing: -0.04em;
   color: #bcbcbc;
-  margin-right: 1.6875rem;
+  margin-right: 4.125rem;
 }
 
 .activeTab {
   font-weight: 500;
   line-height: 23px;
   color: #000000;
+  border-bottom: #000000;
+}
+
+.activeTab::after {
+  content: "";
+  width: 6.25rem;
+  display: block;
+  position: absolute;
+  margin-top: 8.5px;
+  margin-left: -1.5625rem;
+  border-bottom: 2px solid #222222;
 }
 
 .searchWrapper {
+  margin-right: 1.125rem;
   margin-left: auto;
 }
 
 .border {
+  position: relative;
   margin-top: 0.3125rem;
   height: 2px;
   background: #e8e8e8;
   transform: matrix(1, 0, 0, -1, 0, 0);
-}
-
-.borderActive {
-  width: 100px;
-  height: 2px;
-  background: #000000;
+  z-index: -10;
 }
 
 .foundBorder {
-  margin-left: 5.09%;
+  margin-left: 4.8%;
 }
 
 .lostBorder {
-  margin-left: 35.4%;
+  margin-left: 35.3%;
+}
+
+.content {
+  padding-top: 13vh;
 }

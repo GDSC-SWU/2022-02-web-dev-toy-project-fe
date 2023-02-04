@@ -6,10 +6,12 @@ function Welcome() {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <p className={styles.welcomeTitle}>학교 인증 성공!</p>
-        <p className={styles.welcomeTitle2}>슈파인드에 오신걸 환영합니다</p>
+        <p className={styles.welcomeTitle}>회원가입 성공!</p>
+        <p className={styles.welcomeTitle2}>
+          슈파인드<span>.</span>
+        </p>
         <Link to={"/home"} className={styles.confirmBtn}>
-          확인
+          슈파인드 시작하기
         </Link>
       </div>
     </div>

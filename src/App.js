@@ -6,6 +6,7 @@ import ConfirmWebmailPage from "./pages/ConfirmWebmailPage";
 import HomePage from "./pages/HomePage";
 import DetailPage from "./pages/DetailPage";
 import NewpostRoutes from "./components/write/NewpostRoutes";
+import WelcomePage from "./components/signUp/WelcomePage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<GoogleLogin />} />
           <Route path="/email" element={<SignUpPage />} />
           <Route path="/confirmWebMail" element={<ConfirmWebmailPage />} />
+          <Route path="/welcome" element={<WelcomePage />} />
           <Route path="/home/*" element={<HomePage />} />
           <Route path="/detail/:postid" element={<DetailPage />} />
           <Route path="/newpost/*" element={<NewpostRoutes />} />

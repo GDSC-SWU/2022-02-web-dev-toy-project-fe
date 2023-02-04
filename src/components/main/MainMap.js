@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
-import axios from "axios";
 import API from "../../api/API";
 import { useLocation } from "react-router-dom";
 import styles from "./MainMap.module.css";
@@ -9,7 +8,7 @@ import { ReactComponent as CurrentLocSelected } from "../../assets/images/curren
 import Marker from "./Marker.js";
 import ItemCarousel from "./itemCarousel/ItemCarousel";
 //import postList from "../../data/samples/sample_data.json";
-import swu_place_data_sample from "../../data/swu_place_data_sample.json";
+import swu_place_data from "../../data/swu_place_data.json";
 
 // google map options
 const API_KEY = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
@@ -42,7 +41,7 @@ function MainMap({ isFound, currentCategory }) {
     };
 
     getPosts();
-  }, [postList]);
+  }, []);
 
   const mapRef = useRef(null);
   const [center, setCenter] = useState({
@@ -123,7 +122,7 @@ function MainMap({ isFound, currentCategory }) {
   };
 
   const place_data = [];
-  swu_place_data_sample.data.map((item) => {
+  swu_place_data.data.map((item) => {
     place_data.push({
       place: item.place,
       loc: { lat: item.lat, lng: item.lng },
@@ -142,7 +141,7 @@ function MainMap({ isFound, currentCategory }) {
 
   useEffect(() => {
     addMarkers();
-  }, [isFound, currentCategory]);
+  }, [isFound, currentCategory, postList]);
 
   function addMarkers() {
     const foundResult = [...foundMarkers];
@@ -158,60 +157,68 @@ function MainMap({ isFound, currentCategory }) {
 
     if (currentCategory === "전체") {
       // 카테고리 미선택 시
-      postList?.map((item) => {
-        if (item.postStatus === "found") {
-          const i = foundResult.findIndex((e) => {
-            return e.place === item.place;
-          });
+      postList
+        ?.filter((item) => item.status === "false")
+        .map((item) => {
+          if (item.postStatus === "found") {
+            const i = foundResult.findIndex((e) => {
+              return e.place === item.place;
+            });
 
-          if (i >= 0) {
-            foundResult[i].count++;
-            foundResult[i].posts = [...foundResult[i].posts, item.postId];
+            if (i >= 0) {
+              foundResult[i].count++;
+              foundResult[i].posts = [...foundResult[i].posts, item.postId];
+            }
+          } else if (item.postStatus === "lost") {
+            const i = lostResult.findIndex((e) => {
+              return e.place === item.place;
+            });
+
+            if (i >= 0) {
+              lostResult[i].count++;
+              lostResult[i].posts = [...lostResult[i].posts, item.postId];
+            }
           }
-        } else if (item.postStatus === "lost") {
-          const i = lostResult.findIndex((e) => {
-            return e.place === item.place;
-          });
 
-          if (i >= 0) {
-            lostResult[i].count++;
-            lostResult[i].posts = [...lostResult[i].posts, item.postId];
-          }
-        }
-
-        return foundResult;
-      });
+          return foundResult;
+        });
     } else {
       // 카테고리 선택 시
-      postList?.map((item) => {
-        if (item.postStatus === "found" && currentCategory === item.tag) {
-          const i = foundResult.findIndex((e) => {
-            return e.place === item.place;
-          });
+      postList
+        ?.filter((item) => item.status === "false")
+        .map((item) => {
+          if (item.postStatus === "found" && currentCategory === item.tag) {
+            const i = foundResult.findIndex((e) => {
+              return e.place === item.place;
+            });
 
-          if (i >= 0) {
-            foundResult[i].count++;
-            foundResult[i].posts = [...foundResult[i].posts, item.postId];
+            if (i >= 0) {
+              foundResult[i].count++;
+              foundResult[i].posts = [...foundResult[i].posts, item.postId];
+            }
+          } else if (
+            item.postStatus === "lost" &&
+            currentCategory === item.tag
+          ) {
+            const i = lostResult.findIndex((e) => {
+              return e.place === item.place;
+            });
+
+            if (i >= 0) {
+              lostResult[i].count++;
+              lostResult[i].posts = [...lostResult[i].posts, item.postId];
+            }
           }
-        } else if (item.postStatus === "lost" && currentCategory === item.tag) {
-          const i = lostResult.findIndex((e) => {
-            return e.place === item.place;
-          });
 
-          if (i >= 0) {
-            lostResult[i].count++;
-            lostResult[i].posts = [...lostResult[i].posts, item.postId];
-          }
-        }
-
-        return foundResult;
-      });
+          return foundResult;
+        });
     }
 
     setFoundMarkers(foundResult);
     setLostMarkers(lostMarkers);
   }
 
+  // map 위 버튼 클릭 및 carousel 구현 위한
   const [selectedMarker, setSelectedMarker] = useState([]);
   const [selectedPosts, setSelectedPosts] = useState([]);
 
@@ -220,6 +227,11 @@ function MainMap({ isFound, currentCategory }) {
     markerArr[idx] = true;
     setSelectedMarker(markerArr);
     setSelectedPosts(posts);
+  };
+
+  const setCarouselOff = () => {
+    const markerArr = Array(foundMarkers.length).fill(false);
+    setSelectedMarker(markerArr);
   };
 
   return (
@@ -246,7 +258,7 @@ function MainMap({ isFound, currentCategory }) {
                         currentCategory={currentCategory}
                         marker={marker}
                         i={i}
-                        onHandleClick={onHandleClick}
+                        onHandleClick={() => onHandleClick(i, marker.posts)}
                         isSelected={selectedMarker[i]}
                       />
                     ))
@@ -259,14 +271,17 @@ function MainMap({ isFound, currentCategory }) {
                         currentCategory={currentCategory}
                         marker={marker}
                         i={i}
-                        onHandleClick={onHandleClick}
+                        onHandleClick={() => onHandleClick(i, marker.posts)}
                         isSelected={selectedMarker[i]}
                       />
                     ))}
             </div>
             <div className={styles.itemCarousel}>
               {selectedMarker.findIndex((item) => item === true) !== -1 && (
-                <ItemCarousel posts={selectedPosts} />
+                <ItemCarousel
+                  posts={selectedPosts}
+                  setCarouselOff={setCarouselOff}
+                />
               )}
             </div>
           </GoogleMap>

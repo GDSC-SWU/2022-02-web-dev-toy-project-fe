@@ -4,7 +4,6 @@ import CategoryBar from "../../components/main/CategoryBar";
 import { useEffect, useState } from "react";
 import API from "../../api/API";
 import { ReactComponent as CheckIcon } from "../../assets/images/listPage/check.svg";
-//import postList from "../../data/samples/sample_data.json";
 
 // css color property
 const categoryBlue = getComputedStyle(

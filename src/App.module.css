@@ -4,6 +4,7 @@
   --main-color: #215fff;
   --category-blue: #4981ff;
   --sub-color: #353535;
+  --unselected-gray-color: #bcbcbc;
 }
 
 .App {
@@ -13,4 +14,18 @@
 * {
   font-family: "Spoqa Han Sans Neo", "sans-serif";
   font-size: 16px;
+}
+
+option {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+textarea::placeholder {
+  color: #bbbbbb;
+}
+
+button.active {
+  background-color: #353535;
+  color: white;
 }
