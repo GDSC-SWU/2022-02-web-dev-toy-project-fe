@@ -208,7 +208,11 @@ function CreatePost() {
             }}
           ></TextBox>
         </TextBoxArea>
-        <NextButton onClick={() => sendPost()}>다음</NextButton>
+        <StyeldLink to="/detail/:postid">
+          <NextButton onClick={() => onSubmitHandler()} className="nextButton">
+            다음
+          </NextButton>
+        </StyeldLink>
       </ArticleFormWrapper>
     </>
   );
@@ -376,4 +380,9 @@ const ImageUploadButton = styled.button`
   border-radius: 8px;
 `;
 
-export default CreatePost;
+const StyeldLink = styled(Link)`
+  width: 100%;
+  height: 3.5rem;
+`
+
+export default CreatePost
