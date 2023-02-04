@@ -167,7 +167,7 @@ function DetailPage() {
 
   const onCompleteClick = () => {
     const temp = Object.assign({}, post);
-    const newStatus = temp.status === "true" ? "false" : "true";
+    const newStatus = temp.status === "찾음" ? "안찾음" : "찾음";
     temp.status = newStatus;
     setPost(temp);
 
@@ -186,7 +186,7 @@ function DetailPage() {
               ref={imgRef}
             />
           )}
-          {post?.status === "true" && (
+          {post?.status === "찾음" && (
             <div className={styles.coverWrapper}>
               <img
                 className={styles.cover}
@@ -239,7 +239,7 @@ function DetailPage() {
                 {post && (
                   <Tag
                     isTag={false}
-                    title={post.postStatus.includes("found") ? "습득" : "분실"}
+                    title={post.postStatus.includes("습득물") ? "습득" : "분실"}
                   />
                 )}
               </div>
@@ -270,9 +270,7 @@ function DetailPage() {
                 <MiddleDot className={styles.middleDot} />
               </div>
               <div className={styles.detailLocWrapper}>
-                <span className={styles.detailLoc}>
-                  304호 첫 번째 줄 책상 위
-                </span>
+                <span className={styles.detailLoc}>{post?.placeDetail}</span>
               </div>
             </div>
             <div className={styles.contentWrapper}>
@@ -317,7 +315,7 @@ function DetailPage() {
         <div
           className={`${styles.completeButtonContainer} ${
             post &&
-            (post.status === "false" ? styles.notCompleted : styles.completed)
+            (post.status === "안찾음" ? styles.notCompleted : styles.completed)
           }`}
           onClick={onCompleteClick}
         >

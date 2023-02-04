@@ -23,17 +23,19 @@ const ListItem = ({ item }) => {
   const Enum_choice = {
     전자제품: (
       <Headphones
-        stroke={item.status === "false" ? maincolor : unselectedcolor}
+        stroke={item.status === "안찾음" ? maincolor : unselectedcolor}
       />
     ),
     귀중품: (
-      <Wallet stroke={item.status === "false" ? maincolor : unselectedcolor} />
+      <Wallet stroke={item.status === "안찾음" ? maincolor : unselectedcolor} />
     ),
     의류: (
-      <Clothes stroke={item.status === "false" ? maincolor : unselectedcolor} />
+      <Clothes
+        stroke={item.status === "안찾음" ? maincolor : unselectedcolor}
+      />
     ),
     서적: (
-      <Book stroke={item.status === "false" ? maincolor : unselectedcolor} />
+      <Book stroke={item.status === "안찾음" ? maincolor : unselectedcolor} />
     ),
   };
 
@@ -65,7 +67,7 @@ const ListItem = ({ item }) => {
             alt="Item looking for its owner"
           />
         )}
-        {item.status === "true" && (
+        {item.status === "찾음" && (
           <div className={styles.foundCover}>
             <img
               className={styles.cover}
@@ -82,7 +84,7 @@ const ListItem = ({ item }) => {
         <div className={styles.titleWrapper} onClick={onItemClick}>
           <div
             className={
-              item.status === "false"
+              item.status === "안찾음"
                 ? styles.title
                 : `${styles.title} ${styles.selected}`
             }
@@ -93,12 +95,12 @@ const ListItem = ({ item }) => {
         <div className={styles.locContainer}>
           <Loc
             className={styles.locIcon}
-            fill={item.status === "false" ? "#929292" : unselectedcolor}
-            stroke={item.status === "false" ? "#929292" : unselectedcolor}
+            fill={item.status === "안찾음" ? "#929292" : unselectedcolor}
+            stroke={item.status === "안찾음" ? "#929292" : unselectedcolor}
           />
           <div
             className={
-              item.status === "false"
+              item.status === "안찾음"
                 ? styles.loc
                 : `${styles.loc} ${styles.selected}`
             }
@@ -108,7 +110,7 @@ const ListItem = ({ item }) => {
         </div>
         <div
           className={
-            item.status === "false"
+            item.status === "안찾음"
               ? styles.tagWrapper
               : `${styles.tagWrapper} ${styles.selectedTag}`
           }
@@ -119,7 +121,7 @@ const ListItem = ({ item }) => {
           <div className={styles.tagNameWrapper}>
             <div
               className={
-                item.status === "false"
+                item.status === "안찾음"
                   ? styles.tagName
                   : `${styles.tagName} ${styles.selected}`
               }

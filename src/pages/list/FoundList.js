@@ -4,7 +4,6 @@ import CategoryBar from "../../components/main/CategoryBar";
 import { useEffect, useState } from "react";
 import API from "../../api/API";
 import { ReactComponent as CheckIcon } from "../../assets/images/listPage/check.svg";
-//import postList from "../../data/samples/sample_data.json";
 
 // css color property
 const categoryBlue = getComputedStyle(
@@ -60,14 +59,14 @@ function FoundList() {
             ? // '찾은 것도 볼래요' 선택일 경우
               currentCategory === "전체"
               ? postList
-                  ?.filter((item) => item.postStatus === "found")
+                  ?.filter((item) => item.postStatus === "습득물")
                   .map((item, i) => (
                     <ListItem key={i} item={item} className={styles.listItem} />
                   ))
               : postList
                   ?.filter(
                     (item) =>
-                      item.postStatus === "found" &&
+                      item.postStatus === "습득물" &&
                       item.tag === currentCategory
                   )
                   .map((item, i) => (
@@ -78,7 +77,7 @@ function FoundList() {
             ? postList
                 ?.filter(
                   (item) =>
-                    item.postStatus === "found" && item.status === "false"
+                    item.postStatus === "습득물" && item.status === "안찾음"
                 )
                 .map((item, i) => (
                   <ListItem key={i} item={item} className={styles.listItem} />
@@ -86,8 +85,8 @@ function FoundList() {
             : postList
                 ?.filter(
                   (item) =>
-                    item.postStatus === "found" &&
-                    item.status === "false" &&
+                    item.postStatus === "습득물" &&
+                    item.status === "안찾음" &&
                     item.tag === currentCategory
                 )
                 .map((item, i) => (
