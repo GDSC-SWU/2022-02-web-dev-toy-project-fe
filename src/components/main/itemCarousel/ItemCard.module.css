@@ -25,6 +25,13 @@
   margin-left: 11px;
 }
 
+.image {
+  width: 126px;
+  height: 93px;
+  border-radius: 3.14607px;
+  object-fit: cover;
+}
+
 .infoContainer {
   margin-top: 9px;
   margin-left: 10px;

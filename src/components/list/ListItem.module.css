@@ -14,14 +14,28 @@
   cursor: pointer;
 }
 
+.image {
+  width: 162px;
+  height: 147px;
+  border-radius: 5px 5px 0px 0px;
+  object-fit: cover;
+}
+
 .foundCover {
   position: absolute;
   width: 162px;
   height: 147px;
+  top: 0;
+}
+
+.cover {
+  width: 162px;
+  height: 147px;
+  object-fit: cover;
 }
 
 .shareButtonWrapper {
-  position: relative;
+  position: absolute;
   left: 132px;
   top: 8px;
 }

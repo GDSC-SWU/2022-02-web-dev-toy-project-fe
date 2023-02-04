@@ -5,12 +5,15 @@ import { ReactComponent as Wallet } from "../../../assets/images/category/wallet
 import { ReactComponent as Clothes } from "../../../assets/images/category/clothes.svg";
 import { ReactComponent as Book } from "../../../assets/images/category/book.svg";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import API from "../../../api/API";
 
 const maincolor = getComputedStyle(document.documentElement).getPropertyValue(
   "--main-color"
 );
 
 const ItemCard = ({ item }) => {
+  const [post, setPost] = useState(null);
   const navigate = useNavigate();
   const Enum_choice = {
     전자제품: <Headphones stroke={maincolor} />,
@@ -23,17 +26,31 @@ const ItemCard = ({ item }) => {
     navigate(`/detail/${item.postId}`);
   };
 
+  // API 연결
+  useEffect(() => {
+    const getPost = async () => {
+      try {
+        const result = await API.get(`/post/${item.postId}`);
+        setPost(result.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getPost();
+  }, [item]);
+
   return (
     <div className={styles.container} onClick={onItemClick}>
-      <div
-        className={styles.imageContainer}
-        style={{
-          background: `url(${item.imagePath})`,
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-        }}
-      ></div>
+      <div className={styles.imageContainer}>
+        {post && post.imagePath && (
+          <img
+            className={styles.image}
+            src={`${post.imagePath}`}
+            alt="Item looking for its owner"
+          />
+        )}
+      </div>
       <div className={styles.infoContainer}>
         <div className={styles.titleWrapper}>
           <span className={styles.title}>{item.title}</span>
