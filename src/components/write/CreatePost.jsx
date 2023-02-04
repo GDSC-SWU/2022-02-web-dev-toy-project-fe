@@ -2,9 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import NavigationBar from "../UI/NavigationBar";
 import API from "../../api/API";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import arrowIcon from "../../assets/images/ic_round-keyboard-arrow-down.svg";
 import "./CreatePost.css";
@@ -12,11 +11,12 @@ import "./CreatePost.css";
 // 사진 추가 - 파일 리더 사용
 function CreatePost() {
   const location = useLocation();
+  const navigate = useNavigate();
   const accessToken = useSelector((state) => state.accessToken);
   const [loc, setLoc] = useState(null); // 위치
   const [detailLoc, setDetailLoc] = useState(null); // 세부 위치
   const [title, setTitle] = useState(null); // 게시글 제목
-  const [type, setType] = useState("lost"); // 게시글 유형(postStatus)
+  const [type, setType] = useState("분실물"); // 게시글 유형(postStatus)
   const [tag, setTag] = useState(""); // 카테고리
   const [isSelected, setIsSelected] = useState(false);
   const typeData = ["분실물", "습득물"];
@@ -52,8 +52,9 @@ function CreatePost() {
       title: title,
       content: content,
       place: loc,
-      //postStatus: type,
-      status: "lost", // 상태 (주인 찾았는지 여부) -> 처음 게시물 작성할 때는 항상 "Lost"
+      placeDetail: detailLoc,
+      postStatus: type,
+      status: "안찾음", // 상태 (주인 찾았는지 여부) -> 처음 게시물 작성할 때는 항상 "안찾음"
       tag: tag.tag,
     };
     console.log(json);
@@ -69,11 +70,17 @@ function CreatePost() {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      console.log(post);
+
+      // detailPage 이동
+      navigate(`/detail/${post.data.postId}`);
     } catch (error) {
       // 예외 처리
       console.log(error);
     }
+  };
+
+  const onClickNext = () => {
+    sendPost();
   };
 
   const onSubmitHandler = (e) => {
@@ -96,8 +103,13 @@ function CreatePost() {
   //   }
   // }
 
-  const handleToggleButton = () => {
+  const handleToggleButton = (e) => {
     setIsSelected((prev) => !prev);
+
+    //postStatus 설정
+    const newType = typeData[e.target.value];
+    console.log(e.target.value);
+    setType(newType);
   };
 
   const handleTag = (e) => {
@@ -152,7 +164,7 @@ function CreatePost() {
                   className={
                     "toggleButton" + (idx == isSelected ? " active" : "")
                   }
-                  onClick={handleToggleButton}
+                  onClick={(e) => handleToggleButton(e)}
                 >
                   {item}
                 </ToggleButton>
@@ -208,11 +220,9 @@ function CreatePost() {
             }}
           ></TextBox>
         </TextBoxArea>
-        <StyeldLink to="/detail/:postid">
-          <NextButton onClick={() => onSubmitHandler()} className="nextButton">
-            다음
-          </NextButton>
-        </StyeldLink>
+        <NextButton onClick={() => onClickNext()} className="nextButton">
+          다음
+        </NextButton>
       </ArticleFormWrapper>
     </>
   );
@@ -383,6 +393,6 @@ const ImageUploadButton = styled.button`
 const StyeldLink = styled(Link)`
   width: 100%;
   height: 3.5rem;
-`
+`;
 
-export default CreatePost
+export default CreatePost;
