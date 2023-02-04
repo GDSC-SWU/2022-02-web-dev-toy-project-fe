@@ -20,7 +20,6 @@ import { ReactComponent as Headphones } from "../assets/images/category/headphon
 import { ReactComponent as Wallet } from "../assets/images/category/wallet.svg";
 import { ReactComponent as Clothes } from "../assets/images/category/clothes.svg";
 import { ReactComponent as Book } from "../assets/images/category/book.svg";
-//import data from "../data/samples/sample_data.json";
 
 const maincolor = getComputedStyle(document.documentElement).getPropertyValue(
   "--main-color"
@@ -185,7 +184,7 @@ function DetailPage() {
         <div className={styles.imageContainer}>
           <img
             className={styles.image}
-            src={require("../data/samples/sample2.png")}
+            src={require(`${post && post.imagePath}`)}
             alt="Item looking for its owner"
             ref={imgRef}
           />
