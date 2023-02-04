@@ -7,6 +7,8 @@ import { ReactComponent as Headphones } from "../../assets/images/category/headp
 import { ReactComponent as Wallet } from "../../assets/images/category/wallet.svg";
 import { ReactComponent as Clothes } from "../../assets/images/category/clothes.svg";
 import { ReactComponent as Book } from "../../assets/images/category/book.svg";
+import { useState, useEffect } from "react";
+import API from "../../api/API";
 
 const maincolor = getComputedStyle(document.documentElement).getPropertyValue(
   "--main-color"
@@ -16,6 +18,7 @@ const unselectedcolor = getComputedStyle(
 ).getPropertyValue("--unselected-gray-color");
 
 const ListItem = ({ item }) => {
+  const [post, setPost] = useState(null);
   const navigate = useNavigate();
   const Enum_choice = {
     전자제품: (
@@ -38,28 +41,38 @@ const ListItem = ({ item }) => {
     navigate(`/detail/${item.postId}`);
   };
 
+  // API 연결
+  useEffect(() => {
+    const getPost = async () => {
+      try {
+        const result = await API.get(`/post/${item.postId}`);
+        setPost(result.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getPost();
+  }, [item]);
+
   return (
     <div className={styles.container}>
-      <div
-        className={styles.imgContainer}
-        style={{
-          background: `url(${item.imagePath})`,
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-        }}
-        onClick={onItemClick}
-      >
+      <div className={styles.imgContainer} onClick={onItemClick}>
+        {post && post.imagePath && (
+          <img
+            className={styles.image}
+            src={post && `${post.imagePath}`}
+            alt="Item looking for its owner"
+          />
+        )}
         {item.status === "true" && (
-          <div
-            className={styles.foundCover}
-            style={{
-              backgroundImage: `url(${foundCover})`,
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-            }}
-          ></div>
+          <div className={styles.foundCover}>
+            <img
+              className={styles.cover}
+              src={foundCover}
+              alt="This item has found its owner."
+            />
+          </div>
         )}
         <div className={styles.shareButtonWrapper}>
           <Share className={styles.shareButton} />

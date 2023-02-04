@@ -1,6 +1,5 @@
 import styles from "./ItemCarousel.module.css";
 import ItemCard from "./ItemCard";
-import data from "../../../data/samples/sample_data.json";
 import { useEffect, useRef, useState } from "react";
 import API from "../../../api/API";
 

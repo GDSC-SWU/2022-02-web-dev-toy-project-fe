@@ -5,7 +5,6 @@ import styles from "./DetailPage.module.css";
 import Comment from "../components/Comment";
 import API from "../api/API";
 import parseDate from "../util/parseDate";
-import convertURLtoFile from "../util/convertURLtoFile";
 import foundCover from "../assets/images/postDetail/foundCover.png";
 import { ReactComponent as BackKey } from "../assets/images/back_Key.svg";
 import { ReactComponent as BellNone } from "../assets/images/postDetail/bell_none.svg";
@@ -20,7 +19,6 @@ import { ReactComponent as Headphones } from "../assets/images/category/headphon
 import { ReactComponent as Wallet } from "../assets/images/category/wallet.svg";
 import { ReactComponent as Clothes } from "../assets/images/category/clothes.svg";
 import { ReactComponent as Book } from "../assets/images/category/book.svg";
-//import data from "../data/samples/sample_data.json";
 
 const maincolor = getComputedStyle(document.documentElement).getPropertyValue(
   "--main-color"
@@ -72,7 +70,6 @@ function DetailPage() {
   const imgRef = useRef(null);
   const commentRef = useRef(null);
   const endRef = useRef(null);
-  const scrollRef = useRef(null);
   const accessToken = useSelector((state) => state.accessToken);
 
   // 댓글 목록
@@ -154,9 +151,7 @@ function DetailPage() {
 
     const formData = new FormData();
     formData.append("json", JSON.stringify(newPost));
-    await convertURLtoFile(imgRef.current.src).then((res) =>
-      formData.append("file", res)
-    );
+    formData.append("file", null);
 
     try {
       await API.put(`/post/${postid}`, formData, {
@@ -183,12 +178,14 @@ function DetailPage() {
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.imageContainer}>
-          <img
-            className={styles.image}
-            src={require("../data/samples/sample2.png")}
-            alt="Item looking for its owner"
-            ref={imgRef}
-          />
+          {post && post.imagePath && (
+            <img
+              className={styles.image}
+              src={`${post.imagePath}`}
+              alt="Item looking for its owner"
+              ref={imgRef}
+            />
+          )}
           {post?.status === "true" && (
             <div className={styles.coverWrapper}>
               <img
