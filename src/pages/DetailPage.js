@@ -151,7 +151,7 @@ function DetailPage() {
 
     const formData = new FormData();
     formData.append("json", JSON.stringify(newPost));
-    formData.append("file", null);
+    formData.append("file", "");
 
     try {
       await API.put(`/post/${postid}`, formData, {
