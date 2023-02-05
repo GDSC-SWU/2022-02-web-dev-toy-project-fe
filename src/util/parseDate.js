@@ -21,7 +21,7 @@ const parseDate = (publishDate, isDate) => {
 
   d.setHours(d.getHours() + 9);
 
-  const newDate = `${setZero(d.getMonth())}/${setZero(d.getDay())}`;
+  const newDate = `${setZero(d.getMonth() + 1)}/${setZero(d.getDate())}`;
   const newTime = `${setZero(d.getHours())}:${setZero(d.getMinutes())}`;
 
   if (isDate) {
