@@ -158,9 +158,9 @@ function MainMap({ isFound, currentCategory }) {
     if (currentCategory === "전체") {
       // 카테고리 미선택 시
       postList
-        ?.filter((item) => item.status === "false")
+        ?.filter((item) => item.status === "안찾음")
         .map((item) => {
-          if (item.postStatus === "found") {
+          if (item.postStatus === "습득물") {
             const i = foundResult.findIndex((e) => {
               return e.place === item.place;
             });
@@ -169,7 +169,7 @@ function MainMap({ isFound, currentCategory }) {
               foundResult[i].count++;
               foundResult[i].posts = [...foundResult[i].posts, item.postId];
             }
-          } else if (item.postStatus === "lost") {
+          } else if (item.postStatus === "분실물") {
             const i = lostResult.findIndex((e) => {
               return e.place === item.place;
             });
@@ -185,9 +185,9 @@ function MainMap({ isFound, currentCategory }) {
     } else {
       // 카테고리 선택 시
       postList
-        ?.filter((item) => item.status === "false")
+        ?.filter((item) => item.status === "안찾음")
         .map((item) => {
-          if (item.postStatus === "found" && currentCategory === item.tag) {
+          if (item.postStatus === "습득물" && currentCategory === item.tag) {
             const i = foundResult.findIndex((e) => {
               return e.place === item.place;
             });
@@ -197,7 +197,7 @@ function MainMap({ isFound, currentCategory }) {
               foundResult[i].posts = [...foundResult[i].posts, item.postId];
             }
           } else if (
-            item.postStatus === "lost" &&
+            item.postStatus === "분실물" &&
             currentCategory === item.tag
           ) {
             const i = lostResult.findIndex((e) => {

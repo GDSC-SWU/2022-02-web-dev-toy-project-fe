@@ -59,14 +59,15 @@ function LostList() {
             ? // '찾은 것도 볼래요' 선택일 경우
               currentCategory === "전체"
               ? postList
-                  ?.filter((item) => item.postStatus === "lost")
+                  ?.filter((item) => item.postStatus === "분실물")
                   .map((item, i) => (
                     <ListItem key={i} item={item} className={styles.listItem} />
                   ))
               : postList
                   ?.filter(
                     (item) =>
-                      item.postStatus === "lost" && item.tag === currentCategory
+                      item.postStatus === "분실물" &&
+                      item.tag === currentCategory
                   )
                   .map((item, i) => (
                     <ListItem key={i} item={item} className={styles.listItem} />
@@ -76,7 +77,7 @@ function LostList() {
             ? postList
                 ?.filter(
                   (item) =>
-                    item.postStatus === "lost" && item.status === "false"
+                    item.postStatus === "분실물" && item.status === "안찾음"
                 )
                 .map((item, i) => (
                   <ListItem key={i} item={item} className={styles.listItem} />
@@ -84,8 +85,8 @@ function LostList() {
             : postList
                 ?.filter(
                   (item) =>
-                    item.postStatus === "lost" &&
-                    item.status === "false" &&
+                    item.postStatus === "분실물" &&
+                    item.status === "안찾음" &&
                     item.tag === currentCategory
                 )
                 .map((item, i) => (
